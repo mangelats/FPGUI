@@ -23,7 +23,7 @@ package punk.fpgui.components
 		{
 			if (!world) return;
 			if (_usedWorlds.indexOf(world) >= 0) throw new ArgumentError("You can only use the same world once (you can use the same class)");
-			_usedWorlds
+			addWorld(world);
 			_world = world;
 			
 			_graphic = new UIGraphicList([normal, over], [0, 1, 1], 3);
@@ -31,7 +31,7 @@ package punk.fpgui.components
 			super(x, y, _graphic); //with a null graphic
 			_width = width;
 			_height = height;
-			createBuffer();
+			clearBuffer();
 			
 		}
 		
@@ -59,7 +59,7 @@ package punk.fpgui.components
 			FP.buffer.copyPixels(buffer, bufferRect, new Point(x, y));
 		}
 		
-		protected function createBuffer():void
+		protected function clearBuffer():void
 		{
 			buffer = new BitmapData(_width, _height);
 		}
@@ -70,9 +70,9 @@ package punk.fpgui.components
 		}
 		
 		
-		protected static function addWorld(word:World):void
+		protected static function addWorld(world:World):void
 		{
-			
+			if(_usedWorlds.indexOf(world < 0) _usedWorlds.push(world);
 		}
 		protected static function removeWorld(world:World):Boolean
 		{
@@ -93,13 +93,13 @@ package punk.fpgui.components
 		public function set width(w:uint):void
 		{
 			_width = w;
-			createBuffer();
+			clearBuffer();
 		}
 		public function get height():uint { return _height; }
 		public function set height(h:uint):void
 		{
 			_height = h;
-			createBuffer();
+			clearBuffer();
 		}
 		public function get bufferRect():Rectangle { return new Rectangle(0, 0, _width, _height); }
 		
