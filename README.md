@@ -1,5 +1,6 @@
 FPGUI
 =====
+(Still in progress)
 
 What's this?
 ------
@@ -18,23 +19,25 @@ private const OVER:Class;
 [Embed(source = "pressed_button.png")]
 private const PRESSED:Class;
 
+//Creating the button.
 var button:Button = new Button(100, 150, NORMAL, OVER, PRESSED, "Click me!");
 
+//Adding the button to the world.
 add(button);
 ```
 
 ### Easy to handle events
 ``` actionscript
-button.onClick = click;
-
 private function click():void
 {
-	trace("You clicked the button!");
+	trace("You've just clicked the button!");
 }
+
+button.onClick = click;
 ```
 
-### You can use different things as the graphic
-You can use a FlashPunk graphic, an embed class (will be converted into an stamp) or a function that returns a FlashPunk graphic.
+### Different ways to add a graphic
+You can use a FlashPunk graphic (any kind), but you can also use an embed class (that will be transformed into an stamp) or make a function that returns a graphic depending on the variables that you want.
 
 Upcoming features
 ------
