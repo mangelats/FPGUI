@@ -71,6 +71,7 @@ package punk.fpgui.skins
 			{
 				temp = getNextPixel();
 				temp2 = (temp & 0xFFFF0000) >>> 4;
+				_partsList[temp2] = new Array;
 				for (var n:int = (temp & 0xFFFF) - 1; n >= 0; n--)
 				{
 					_partsList[temp2][n] = getNextPart();
@@ -105,9 +106,9 @@ package punk.fpgui.skins
 				for (var x:int = 0; x < ref; x++)
 				{
 					var part:SkinPart = _partsList[p][x];
-					_skinData.setPixel(_selectedPixel.x, _selectedPixel.y, ((part.type & 0xFFFF) << 4) + (PartTypes.usedBytes(part.type) & 0xFFFF));
+					_skinData.setPixel(_selectedPixel.x, _selectedPixel.y, ((part.type & 0xFFFF) << 4) + (part.metrics.length & 0xFFFF));
 					selectNextPixel();
-					for (var y:int = 0; y < PartTypes.usedBytes(part.type); y++)
+					for (var y:int = 0; y < part.metrics.length; y++)
 					{
 						var value:Number = part.metrics[y];
 						for (var y:int = n - 1; y >= 0; y--)
@@ -128,6 +129,10 @@ package punk.fpgui.skins
 			
 			_skinEncodedUpdated = true;
 		}
+		
+		
+		
+		
 		private function selectNextPixel():void
 		{
 			_selectedPixel.x++;
