@@ -2,9 +2,9 @@ package punk.fpgui.components
 {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import punk.fpgui.UIEntity;
-	import punk.fpgui.UIGraphicList;
-	import punk.fpgui.UIState;
+	import punk.fpgui.GUIEntity;
+	import punk.fpgui.GUIGraphicList;
+	import punk.fpgui.GUIState;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Stamp;
 	import net.flashpunk.utils.Input;
@@ -12,12 +12,12 @@ package punk.fpgui.components
 	 * ...
 	 * @author Copying
 	 */
-	public class Slider extends UIEntity
+	public class Slider extends GUIEntity
 	{
 		
 		public function Slider(x:Number = 0, y:Number = 0, slideWidth:Number = 0, slideOffsetX:Number = 0, bgNormal:* = null, selNormal:* = null, selCenterX:Number = 0, bgOver:* = null, selOver:* = null, bgPressed:* = null, selPressed:* = null, defaultValue:Number = 0) 
 		{
-			_graphics = new UIGraphicList([bgNormal, bgOver, bgPressed, selNormal, selOver, selPressed], [[0, 1, 2], [3, 4, 5]], 3);
+			_graphics = new GUIGraphicList([bgNormal, bgOver, bgPressed, selNormal, selOver, selPressed], [[0, 1, 2], [3, 4, 5]], 3);
 			
 			_slideWidth = slideWidth;
 			_slideOffset = slideOffsetX;
@@ -70,7 +70,7 @@ package punk.fpgui.components
 			reposSel();
 		}
 		
-		private var _graphics:UIGraphicList;
+		private var _graphics:GUIGraphicList;
 		
 		private var _selected:Boolean = false;
 		

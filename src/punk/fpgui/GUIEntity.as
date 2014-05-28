@@ -8,7 +8,7 @@ package punk.fpgui
 	 * ...
 	 * @author Copying
 	 */
-	public class UIEntity extends Entity
+	public class GUIEntity extends Entity
 	{
 		
 		//functions that handle differents events
@@ -19,7 +19,7 @@ package punk.fpgui
 		public var onMouseDown:Function = onMD;
 		public var onMouseUp:Function = onMU;
 		
-		public function UIEntity(x:Number = 0, y:Number = 0, graphics:UIGraphicList = null) 
+		public function GUIEntity(x:Number = 0, y:Number = 0, graphics:GUIGraphicList = null) 
 		{
 			super(x, y);
 			
@@ -50,11 +50,11 @@ package punk.fpgui
 			if (collidePoint(x, y, world.mouseX, world.mouseY))
 			{
 				
-				if (!Input.mouseDown || (_state == UIState.NORMAL && _down))
+				if (!Input.mouseDown || (_state == GUIState.NORMAL && _down))
 				{
-					_state = UIState.OVER;
+					_state = GUIState.OVER;
 					
-					if (_state == UIState.MOUSE_DOWN)
+					if (_state == GUIState.MOUSE_DOWN)
 					{
 						mouseUp();
 						onMouseUp();
@@ -63,17 +63,17 @@ package punk.fpgui
 				
 				if (Input.mouseDown)
 				{
-					if (_state == UIState.OVER && !_down)
+					if (_state == GUIState.OVER && !_down)
 					{
-						_state = UIState.MOUSE_DOWN;
+						_state = GUIState.MOUSE_DOWN;
 						mouseDown();
 						onMouseDown();
 					}
 				}
 			}
-			else if (_state == UIState.OVER || _state == UIState.MOUSE_DOWN)
+			else if (_state == GUIState.OVER || _state == GUIState.MOUSE_DOWN)
 			{
-				_state = UIState.NORMAL;
+				_state = GUIState.NORMAL;
 				over();
 				onOver();
 			}
@@ -124,8 +124,8 @@ package punk.fpgui
 		private function onMU():void { }
 		
 		
-		private var _graphics:UIGraphicList;
-		private var _state:uint = UIState.NORMAL;
+		private var _graphics:GUIGraphicList;
+		private var _state:uint = GUIState.NORMAL;
 		
 		//the state of the last frame
 		private var _down:Boolean = false;

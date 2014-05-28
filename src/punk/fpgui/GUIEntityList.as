@@ -6,10 +6,10 @@ package punk.fpgui
 	 * ...
 	 * @author Copying
 	 */
-	public class UIEntityList extends Entity
+	public class GUIEntityList extends Entity
 	{
 		
-		public function UIEntityList(x:Number = 0, y:Number = 0, background:Graphic = null) 
+		public function GUIEntityList(x:Number = 0, y:Number = 0, background:Graphic = null) 
 		{
 			super(x, y, (background ? background : new Graphic))
 			setHitboxTo(graphic);

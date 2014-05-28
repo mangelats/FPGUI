@@ -4,7 +4,7 @@ package punk.fpgui
 	 * ...
 	 * @author Copying
 	 */
-	public class UIState 
+	public class GUIState 
 	{
 		public static const lenght:uint = 3;
 		

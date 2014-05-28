@@ -6,9 +6,9 @@ package punk.fpgui.components
 	import flash.geom.Rectangle;
 	import flash.geom.Transform;
 	import flash.text.TextLineMetrics;
-	import punk.fpgui.UIEntity;
-	import punk.fpgui.UIGraphicList;
-	import punk.fpgui.UIText;
+	import punk.fpgui.GUIEntity;
+	import punk.fpgui.GUIGraphicList;
+	import punk.fpgui.GUIText;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.utils.Input;
@@ -17,7 +17,7 @@ package punk.fpgui.components
 	 * ...
 	 * @author Copying
 	 */
-	public class TextField extends UIEntity
+	public class TextField extends GUIEntity
 	{
 		public static var selected:TextField = null;
 		
@@ -31,9 +31,9 @@ package punk.fpgui.components
 			_textRect = textRect || new Rectangle;
 			
 			_tempText = (multiline ? text : text.split("\n")[0]);
-			_text = new UIText(_tempText, _textRect.width, _textRect.height, textOptions, 0, 0, _textRect.x, _textRect.y);
+			_text = new GUIText(_tempText, _textRect.width, _textRect.height, textOptions, 0, 0, _textRect.x, _textRect.y);
 			
-			_graphics = new UIGraphicList([normal, over, pressed, _text], [[0, 1, 2], [3, 3, 3]], 3);
+			_graphics = new GUIGraphicList([normal, over, pressed, _text], [[0, 1, 2], [3, 3, 3]], 3);
 			
 			super(x, y, _graphics);
 			
@@ -140,9 +140,9 @@ package punk.fpgui.components
 		private var _editable:Boolean;
 		private var _multiline:Boolean;
 		
-		private var _text:UIText;
+		private var _text:GUIText;
 		private var _tempText:String;
-		private var _graphics:UIGraphicList;
+		private var _graphics:GUIGraphicList;
 		private var _tlm:TextLineMetrics;
 		
 		private var _textRect:Rectangle;

@@ -8,7 +8,7 @@ package punk.fpgui
 	 * ...
 	 * @author Copying
 	 */
-	public class UIGraphicList extends Graphic
+	public class GUIGraphicList extends Graphic
 	{
 		
 		public var updateAll:Boolean = false;
@@ -17,7 +17,7 @@ package punk.fpgui
 		public var width:Number;
 		public var height:Number;
 		
-		public function UIGraphicList(graphics:Array = null, layers:Array = null, referencesNumber:uint = 1) //references ia a 2D array
+		public function GUIGraphicList(graphics:Array = null, layers:Array = null, referencesNumber:uint = 1) //references ia a 2D array
 		{
 			_usedBases = new Array;
 			_usedObjects = new Array;

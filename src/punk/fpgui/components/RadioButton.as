@@ -1,12 +1,12 @@
 package punk.fpgui.components 
 {
-	import punk.fpgui.UIEntity;
-	import punk.fpgui.UIGraphicList;
+	import punk.fpgui.GUIEntity;
+	import punk.fpgui.GUIGraphicList;
 	/**
 	 * ...
 	 * @author Copying
 	 */
-	public class RadioButton extends UIEntity
+	public class RadioButton extends GUIEntity
 	{
 		private static var groups:Object = new Object;
 		
@@ -15,7 +15,7 @@ package punk.fpgui.components
 		public function RadioButton(x:Number = 0, y:Number = 0, group:String = "default", noramal:* = null, over:* = null, pressed:* = null, unchecked:* = null, checked:* = null)
 		{
 			_group = group;
-			_graphics = new UIGraphicList([normal, over, pressed, unchecked, checked], [[0, 1, 2, 0, 1, 2], [3, 3, 3, 4, 4, 4]], 6);
+			_graphics = new GUIGraphicList([normal, over, pressed, unchecked, checked], [[0, 1, 2, 0, 1, 2], [3, 3, 3, 4, 4, 4]], 6);
 			
 			super(x, y, _graphics);
 			
@@ -50,7 +50,7 @@ package punk.fpgui.components
 		}
 		
 		private var _group:String;
-		private var _graphics:UIGraphicList;
+		private var _graphics:GUIGraphicList;
 	}
 
 }

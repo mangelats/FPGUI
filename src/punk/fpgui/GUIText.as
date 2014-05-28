@@ -13,10 +13,10 @@ package punk.fpgui
 	 * ...
 	 * @author Copying
 	 */
-	public class UIText extends Text
+	public class GUIText extends Text
 	{
 		
-		public function UIText(text:String, width:Number = 0, height:Number = 0, options:Object = null, textScrollX:Number = 0, textScrollY:Number = 0, offsetX:Number = 0, offsetY:Number = 0)
+		public function GUIText(text:String, width:Number = 0, height:Number = 0, options:Object = null, textScrollX:Number = 0, textScrollY:Number = 0, offsetX:Number = 0, offsetY:Number = 0)
 		{
 			if (!options) options = { size: 16, color: 0xFFFFFF, wordWrap: false, align: "left", resizable: true };
 			_textScroll = new Point(textScrollX, textScrollY);

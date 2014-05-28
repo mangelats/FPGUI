@@ -1,13 +1,13 @@
 package punk.fpgui.components 
 {
-	import punk.fpgui.UIEntity;
-	import punk.fpgui.UIGraphicList;
+	import punk.fpgui.GUIEntity;
+	import punk.fpgui.GUIGraphicList;
 	import net.flashpunk.graphics.Text;
 	/**
 	 * ...
 	 * @author Copying
 	 */
-	public class Button extends UIEntity
+	public class Button extends GUIEntity
 	{
 		
 		public function Button(x:Number = 0, y:Number = 0, normal:* = null, over:* = null, pressed:* = null, text:String = "", textOffsetX:Number = 0, textOffsetY:Number = 0, textOptions:Object = null) 
@@ -16,7 +16,7 @@ package punk.fpgui.components
 			
 			_text = new Text(text, textOffsetX, textOffsetY, textOptions);
 			
-			_graphics =  new UIGraphicList([normal, over, pressed, _text], [[0, 1, 2], [3, 3, 3]], 3);
+			_graphics =  new GUIGraphicList([normal, over, pressed, _text], [[0, 1, 2], [3, 3, 3]], 3);
 			
 			super(x, y, _graphics);
 		}
@@ -28,7 +28,7 @@ package punk.fpgui.components
 		
 		public function get text():Text { return _text };
 		
-		private var _graphics:UIGraphicList;
+		private var _graphics:GUIGraphicList;
 		private var _text:Text;
 	}
 

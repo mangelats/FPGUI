@@ -3,8 +3,8 @@ package punk.fpgui.components
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import punk.fpgui.UIEntity;
-	import punk.fpgui.UIGraphicList;
+	import punk.fpgui.GUIEntity;
+	import punk.fpgui.GUIGraphicList;
 	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.World;
@@ -12,7 +12,7 @@ package punk.fpgui.components
 	 * ...
 	 * @author Copying
 	 */
-	public class WorldWindow extends UIEntity
+	public class WorldWindow extends GUIEntity
 	{
 		
 		private static var _usedWorlds:Array = new Array;
@@ -26,7 +26,7 @@ package punk.fpgui.components
 			addWorld(world);
 			_world = world;
 			
-			_graphic = new UIGraphicList([normal, over], [0, 1, 1], 3);
+			_graphic = new GUIGraphicList([normal, over], [0, 1, 1], 3);
 			
 			super(x, y, _graphic); //with a null graphic
 			_width = width;
@@ -109,7 +109,7 @@ package punk.fpgui.components
 		private var _width:uint;
 		private var _height:uint;
 		
-		private var _graphic:UIGraphicList;
+		private var _graphic:GUIGraphicList;
 	}
 
 }

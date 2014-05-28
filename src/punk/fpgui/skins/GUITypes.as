@@ -4,7 +4,7 @@ package punk.fpgui.skins
 	 * ...
 	 * @author Copying
 	 */
-	public class UITypes 
+	public class GUITypes 
 	{
 		public static var BUTTON:int = 0;
 		public static var TOGGLE_BUTTON:int = 1;

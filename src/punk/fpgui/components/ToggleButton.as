@@ -1,13 +1,13 @@
 package punk.fpgui.components 
 {
-	import punk.fpgui.UIEntity;
-	import punk.fpgui.UIGraphicList;
+	import punk.fpgui.GUIEntity;
+	import punk.fpgui.GUIGraphicList;
 	import net.flashpunk.graphics.Text;
 	/**
 	 * ...
 	 * @author Copying
 	 */
-	public class ToggleButton extends UIEntity
+	public class ToggleButton extends GUIEntity
 	{
 		public var checked:Boolean = false;
 		
@@ -16,7 +16,7 @@ package punk.fpgui.components
 			if (!textOptions) textOptions = { size: 16, color: 0x0000000, wordWrap: true, align: "center", resizable: true };
 			_text = new Text(text, textOffsetX, textOffsetY, textOptions);
 			
-			_graphics = new UIGraphicList([normal, over, pressed, normalChecked, overChecked, pressedChecked, _text], [[0, 1, 2, 3, 4, 5], [6, 6, 6, 6, 6, 6]], 6);
+			_graphics = new GUIGraphicList([normal, over, pressed, normalChecked, overChecked, pressedChecked, _text], [[0, 1, 2, 3, 4, 5], [6, 6, 6, 6, 6, 6]], 6);
 			super(x, y, _graphics);
 		}
 		
@@ -30,7 +30,7 @@ package punk.fpgui.components
 			checked = !checked;
 		}
 		
-		private var _graphics:UIGraphicList;
+		private var _graphics:GUIGraphicList;
 		private var _text:Text;
 		
 	}
