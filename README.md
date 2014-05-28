@@ -11,7 +11,16 @@ You can directly call the diferent components like Buttons or a Textfield, or yo
 
 ### Call directly the component
 ``` actionscript
+[Embed(source = "normal_button.png")]
+private const NORMAL:Class;
+[Embed(source = "over_button.png")]
+private const OVER:Class;
+[Embed(source = "pressed_button.png")]
+private const PRESSED:Class;
 
+var button:Button = new Button(100, 150, NORMAL, OVER, PRESSED, "Click me!);
+
+add(button);
 ```
 
 [FlashPunk]:http://useflashpunk.net
