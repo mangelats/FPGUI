@@ -4,7 +4,7 @@ FPGUI
 
 What's this?
 ------
-This is an library for ActionScript 3 and [FlashPunk] that allows to make an UI easily.
+This is an library for ActionScript 3 and [FlashPunk] that allows to make a GUI for games easily.
 
 Two ways to create a UI
 ------
@@ -27,6 +27,8 @@ add(button);
 ```
 
 ### Easy to handle events
+You only have to set the function you want to the especific public variable.
+
 ``` actionscript
 private function click():void
 {
@@ -41,8 +43,9 @@ You can use a FlashPunk graphic (any kind), but you can also use an embed class 
 
 Upcoming features
 ------
-  - An skin editor
-  - More components (like a progress var);
+  - Make all the fucntions to allow skins to create components.
+  - An skin editor.
+  - More components (like a progress var).
 
 
 [FlashPunk]:http://useflashpunk.net
