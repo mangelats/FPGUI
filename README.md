@@ -30,7 +30,8 @@ add(button);
 You only have to set the function you want to the especific public variable.
 
 ``` actionscript
-private function click():void
+//Function that you want to be called
+public function click():void
 {
 	trace("You've just clicked the button!");
 }
@@ -45,6 +46,7 @@ Upcoming features
 ------
   - Make all the fucntions to allow skins to create components.
   - An skin editor.
+  - Create a wiki.
   - More components (like a progress var).
 
 
