@@ -16,7 +16,7 @@ package punk.fpgui
 	public class GUIText extends Text
 	{
 		
-		public function GUIText(text:String, width:Number = 0, height:Number = 0, options:Object = null, textScrollX:Number = 0, textScrollY:Number = 0, offsetX:Number = 0, offsetY:Number = 0)
+		public function GUIText(text:String, width:Number = 0, height:Number = 0, options:Object = null, offsetX:Number = 0, offsetY:Number = 0, textScrollX:Number = 0, textScrollY:Number = 0)
 		{
 			if (!options) options = { size: 16, color: 0xFFFFFF, wordWrap: false, align: "left", resizable: true };
 			_textScroll = new Point(textScrollX, textScrollY);
@@ -67,11 +67,29 @@ package punk.fpgui
 			_field.width = _width;
 			_field.height = _height;
 			
-			_field.x = -(_field.transform.matrix.tx = _textScroll.x);
-			_field.y = -(_field.transform.matrix.ty = _textScroll.y);
+			_field.transform.matrix.tx = _textScroll.x;
+			_field.transform.matrix.ty = _textScroll.y;
+			_field.y = -_textScroll.y;
 			
-			_source.draw(_field, _field.transform.matrix, null, null, _textRect);
+			var tlm:TextLineMetrics;
+			var remainder:Number;
+			var tlm_y:Number = 2;
+			var renderRect:Rectangle = new Rectangle(0, 0, _textRect.width, _textRect.height);
 			
+			for (var li:int = 0; li < ml; li++)
+			{
+				tlm = _field.getLineMetrics(li);
+				if ((tlm_y + tlm.height) < _textScroll.y) continue;
+				if (tlm_y > (_textRect.height + _textScroll.y)) break;
+				
+				_field.x = -_textScroll.x + (tlm.x % 1);
+				renderRect.height = Math.min(tlm.height, _textRect.height - tlm_y);
+				renderRect.y = tlm_y;
+				
+				_source.draw(_field, _field.transform.matrix, null, null, renderRect);
+				
+				tlm_y += tlm.height;
+			}
 			
 			updateBuffer();
 		}

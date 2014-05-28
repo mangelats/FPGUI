@@ -31,7 +31,7 @@ package punk.fpgui.components
 			_textRect = textRect || new Rectangle;
 			
 			_tempText = (multiline ? text : text.split("\n")[0]);
-			_text = new GUIText(_tempText, _textRect.width, _textRect.height, textOptions, 0, 0, _textRect.x, _textRect.y);
+			_text = new GUIText(_tempText, _textRect.width, _textRect.height, textOptions, _textRect.x, _textRect.y, 0, 0);
 			
 			_graphics = new GUIGraphicList([normal, over, pressed, _text], [[0, 1, 2], [3, 3, 3]], 3);
 			
