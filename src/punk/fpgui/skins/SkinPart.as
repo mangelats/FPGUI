@@ -19,6 +19,8 @@ package punk.fpgui.skins
 		
 		public function getPart(width:Number, height:Number):BitmapData
 		{
+			if (type == PartTypes.EXTRA_DATA) return null;
+			
 			var r:BitmapData = new BitmapData(width, height, true, 0);
 			if (type == PartTypes.UNRESIZABLE)
 			{
