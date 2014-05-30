@@ -10,7 +10,7 @@ package punk.fpgui.components
 	public class Button extends GUIEntity
 	{
 		
-		public function Button(x:Number = 0, y:Number = 0, normal:* = null, over:* = null, pressed:* = null, text:String = "", textOffsetX:Number = 0, textOffsetY:Number = 0, textOptions:Object = null) 
+		public function Button(x:Number = 0, y:Number = 0, normal:* = null, over:* = null, pressed:* = null, text:String = "", textLeftOffset:Number = 0, textYopOffset:Number = 0, textRightOfsset:Number = 0, textBottomOffset:Number = 0, textOptions:Object = null) 
 		{
 			if (!textOptions) textOptions = { size: 16, color: 0x0000000, wordWrap: true, align: "center", resizable: true };
 			
