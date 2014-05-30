@@ -3,7 +3,8 @@ FPGUI
 What's this?
 ------
 This is a library for ActionScript 3 and [FlashPunk] that allows to make a GUI for games easily.
-It still is in working process.
+
+It is in working process and i'm testing (if you find a bug, let me know).
 
 Features
 ------
@@ -26,7 +27,6 @@ add(button);
 ```
 
 ### Create or inport an skin
-(Still in progress).
 
 You can create an skin and make sure that every component follows the same rules.
 ``` actionscript
