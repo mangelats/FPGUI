@@ -2,7 +2,8 @@ FPGUI
 =====
 What's this?
 ------
-This is an library for ActionScript 3 and [FlashPunk] that allows to make a GUI for games easily.
+This is a library for ActionScript 3 and [FlashPunk] that allows to make a GUI for games easily.
+It still is in working process.
 
 Features
 ------
