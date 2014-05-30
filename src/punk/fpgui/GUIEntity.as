@@ -52,13 +52,12 @@ package punk.fpgui
 				
 				if (!Input.mouseDown || (_state == GUIState.NORMAL && _down))
 				{
-					_state = GUIState.OVER;
-					
 					if (_state == GUIState.MOUSE_DOWN)
 					{
 						mouseUp();
 						onMouseUp();
 					}
+					_state = GUIState.OVER;
 				}
 				
 				if (Input.mouseDown)
