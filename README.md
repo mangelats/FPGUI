@@ -28,6 +28,17 @@ add(button);
 (Still in progress).
 
 You can create an skin and make sure that every component follows the same rules.
+``` actionscript
+//embed the skin that have the information encoded
+[Embed(source = "skin_name.png")]
+private const SKIN:Class;
+
+//create the skin and add it to the skin container
+var skin:Skin = new Skin(SKIN, true);
+
+//creates a 100x40 button in the position (10, 10)
+var button:Button = skin.getButton(10, 10, 100, 40, "Click me!");
+```
 
 ### Easy to handle events
 You only have to set the function you want to the especific public variable.
@@ -41,9 +52,6 @@ public function click():void
 
 button.onClick = click;
 ```
-
-### Different ways to add a graphic
-You can use a FlashPunk graphic (any kind), but you can also use an embed class (that will be transformed into an stamp) or make a function that returns a graphic depending on the variables that you want.
 
 Upcoming features
 ------
