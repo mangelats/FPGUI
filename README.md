@@ -4,7 +4,7 @@ What's this?
 ------
 This is a library for ActionScript 3 and [FlashPunk] that allows to make a GUI for games easily.
 
-It is in working process and i'm testing (if you find a bug, let me know).
+It is in working process (specially the skin part) and i'm testing (if you find a bug, let me know).
 
 Features
 ------
