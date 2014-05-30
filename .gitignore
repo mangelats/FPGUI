@@ -1,0 +1,3 @@
+bin/
+*.as3proj
+src/net/flashpunk/*
