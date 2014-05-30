@@ -6,11 +6,11 @@ What's this?
 ------
 This is an library for ActionScript 3 and [FlashPunk] that allows to make a GUI for games easily.
 
-Two ways to create a UI
+Features
 ------
-You can directly call the diferent components like Buttons or a Textfield, or you can make and import skins that allows you to make sure every component is as you wanted.
-
 ### Call directly the component
+You can call components directly.
+
 ``` actionscript
 [Embed(source = "normal_button.png")]
 private const NORMAL:Class;
@@ -26,6 +26,10 @@ var button:Button = new Button(100, 150, NORMAL, OVER, PRESSED, "Click me!");
 add(button);
 ```
 
+### Create or inport an skin
+(Still in progress)
+You can create an skin and make sure that every component follows the same rules.
+
 ### Easy to handle events
 You only have to set the function you want to the especific public variable.
 
@@ -33,7 +37,7 @@ You only have to set the function you want to the especific public variable.
 //Function that you want to be called
 public function click():void
 {
-	trace("You've just clicked the button!");
+	trace("You've clicked the button!");
 }
 
 button.onClick = click;
