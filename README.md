@@ -37,7 +37,7 @@ private const SKIN:Class;
 var skin:Skin = new Skin(SKIN, true);
 
 //creates a 100x40 button in the position (10, 10)
-var button:Button = skin.getButton(10, 10, 100, 40, "Click me!");
+var button:Button = skin.getButton(100, 150, 150, 40, "Click me!");
 ```
 
 ### Easy to handle events
