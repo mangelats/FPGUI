@@ -25,7 +25,8 @@ add(button);
 ```
 
 ### Create or inport an skin
-(Still in progress)
+(Still in progress).
+
 You can create an skin and make sure that every component follows the same rules.
 
 ### Easy to handle events
