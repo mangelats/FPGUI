@@ -4,6 +4,12 @@ package punk.fpgui.skins
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import net.flashpunk.FP;
+	import punk.fpgui.components.Button;
+	import punk.fpgui.components.CheckBox;
+	import punk.fpgui.components.RadioButton;
+	import punk.fpgui.components.Slider;
+	import punk.fpgui.components.TextField;
+	import punk.fpgui.components.ToggleButton;
 	/**
 	 * ...
 	 * @author Copying
@@ -51,7 +57,55 @@ package punk.fpgui.skins
 			}
 			return r;
 		}
+//-----------------------------------------------------------------------------------------------------------------------
 		
+		public function getButton(x:Number, y:Number, width:Number, height:Number, text:String):Button
+		{
+			if (!(_partsList[0] && _partsList[0] is Array && _partsList[0].length > 4)) return null;
+			return new Button(x, y, _partsList[0][0].getPart(width, height), _partsList[0][1].getPart(width, height), _partsList[0][2].getPart(width, height), text, _partsList[0][3][0], _partsList[0][3][1], width - _partsList[0][3].metrics[0] - _partsList[0][3].metrics[2], height - _partsList[0][3].metrics[1] - _partsList[0][3].metrics[3], getTextOptions());
+		}
+		public function getToggleButton(x:Number, y:Number, width:Number, height:Number, text:String):ToggleButton
+		{
+			if (!(_partsList[1] && _partsList[1] is Array && _partsList[1].length > 7)) return null;
+			return new ToggleButton(x, y, _partsList[1][0].getPart(width, height), _partsList[1][1].getPart(width, height), _partsList[1][2].getPart(width, height), _partsList[1][3].getPart(width, height), _partsList[1][4].getPart(width, height), _partsList[1][5].getPart(width, height), text, _partsList[1][6].metrics[0], _partsList[1][6].metrics[1], width - _partsList[1][6].metrics[0] - _partsList[1][6].metrics[2], height - _partsList[1][6].metrics[1] - _partsList[1][6].metrics[3], getTextOptions());
+		}
+		public function getCheckButton(x:Number, y:Number, width:Number, height:Number)
+		{
+			if (!(_partsList[2] && _partsList[2] is Array && _partsList[2].length > 5)) return null;
+			return new CheckBox(x, y, _partsList[2][0].getPart(width, length), _partsList[2][1].getPart(width, length), _partsList[2][2].getPart(width, length), _partsList[2][3].getPart(width, length), _partsList[2][4].getPart(width, length));
+		}
+		public function getRadioButton(x:Number, y:Number, width:Number, height:Number, group:String = "default")
+		{
+			if (!(_partsList[3] && _partsList[3] is Array && _partsList[3].length > 5)) return null;
+			return new RadioButton(x, y, group, _partsList[3][0].getPart(width, length), _partsList[3][1].getPart(width, length), _partsList[3][2].getPart(width, length), _partsList[3][3].getPart(width, length), _partsList[3][4].getPart(width, length));
+		}
+		public function getSlider(x:Number, y:Number, width:Number, height:Number, selectorWidth:Number, selectorHeight:Number, defaultValue:Number = 0.5, mouseWheel:Number = 0):Slider
+		{
+			if (!(_partsList[4] && _partsList[4] is Array && _partsList[4].length > 7)) return null;
+			return new Slider(x, y, new Point(_partsList[4][6].metrics[0], _partsList[4][6].metrics[1]), new Point(_partsList[4][6].metrics[2], _partsList[4][6].metrics[3]), defaultValue, new Point(selectorWidth / 2, selectorHeight / 2), mouseWheel, _partsList[4][0].getPart(width, height), _partsList[4][3].getPart(selectorWidth, selectorHeight), _partsList[4][1].getPart(width, height), _partsList[4][4].getPart(selectorWidth, selectorHeight), _partsList[4][2].getPart(width, height), _partsList[4][5].getPart(selectorWidth, selectorHeight));
+		}
+		public function getTextField(x:Number, y:Number, width:Number, height:Number, defaultText:String = "", multiline:Boolean = false, editable:Boolean = true);
+		{
+			if (!(_partsList[5] && _partsList[5] is Array && _partsList[5].length > 4)) return null;
+			return new TextField(x, y, _partsList[5][0].getPart(width, length), _partsList[5][1].getPart(width, length), _partsList[5][2].getPart(width, length), defaultText, multiline, new Rectangle(_partsList[5][3].metrics[0], _partsList[5][3].metrics[1], width - _partsList[5][3].metrics[0] - _partsList[5][3].metrics[2], height - _partsList[5][3].metrics[1] - _partsList[5][3].metrics[3]), getTextOptions(), editable);
+		}
+		
+		public function getTextOptions():Object
+		{
+			var r:Object = new Object;
+			
+			if (!(_partsList[0xFFFF] && _partsList[0xFFFF] is Array)) return null;
+			
+			if (_partsList[0xFFFF][0]) r.size = _partsList[0xFFFF][0];
+			if (_partsList[0xFFFF][1]) r.align = _partsList[0xFFFF][1];
+			if (_partsList[0xFFFF][2]) r.wordWarp = _partsList[0xFFFF][2];
+			if (_partsList[0xFFFF][3]) r.resizable = _partsList[0xFFFF][3];
+			if (_partsList[0xFFFF][4]) r.width = _partsList[0xFFFF][4];
+			if (_partsList[0xFFFF][5]) r.height = _partsList[0xFFFF][5];
+			
+			return r;
+		}
+//-----------------------------------------------------------------------------------------------------------------------
 		private function decode():void
 		{
 			_partsList = new Array;
@@ -72,13 +126,44 @@ package punk.fpgui.skins
 				temp = getNextPixel();
 				temp2 = (temp & 0xFFFF0000) >>> 4;
 				_partsList[temp2] = new Array;
-				for (var n:int = (temp & 0xFFFF) - 1; n >= 0; n--)
+				if (temp2 == GUITypes.TEXT_DATA) //if it's the TextData
 				{
-					_partsList[temp2][n] = getNextPart();
+					_partsList[temp2][0] = getNextPixel(); //text size (uint); pixel 1
+					temp = getNextPixel();					//pixel2
+					switch(temp & 0x000000FF) //text align (String)
+					{
+						case 0:
+							_partsList[temp2][1] = null;
+							break;
+						case 1:
+							_partsList[temp2][1] = "left";
+							break;
+						case 2:
+							_partsList[temp2][1] = "center";
+							break;
+						case 3:
+							_partsList[temp2][1] = "right";
+					}
+					_partsList[temp2][2] = new Boolean((temp & 0x00000F00) >>> 2); //text wordWrap (Boolean)
+					_partsList[temp2][3] = new Boolean((temp & 0x0000F000) >>> 3); //text wordWrap (Boolean)
+					
+					_partsList[temp2][4] = getNextPixel(); //width (uint) (pretty much unused); pixel 3
+					if (_partsList[temp2][4] == 0) _partsList[temp2][4] = null;
+					
+					_partsList[temp2][5] = getNextPixel(); //height (uint) (pretty much unused); pixel 4
+					if (_partsList[temp2][5] == 0) _partsList[temp2][5] = null;
+				}
+				else
+				{
+					for (var n:int = (temp & 0xFFFF) - 1; n >= 0; n--)
+					{
+						_partsList[temp2][n] = getNextPart();
+					}
 				}
 			}
 			_skinEncodedUpdated = true;
 		}
+		
 		private var _lines:uint;
 		private function encode():void
 		{
@@ -183,12 +268,33 @@ package punk.fpgui.skins
 			return new SkinPart(_skinImage, partType, a);
 		}
 		
+		//-----
+		
+		public static function addSkin(name:String, skin:Skin):void
+		{
+			_skins[name] = skin;
+		}
+		public static function removeSkin(name:String):void
+		{
+			if (_skins.hasOwnProperty(name)) _skins[name] = null;
+		}
+		
+		public static function getSkin(name:String):Skin
+		{
+			if (_skins.hasOwnProperty(name) && _skins[name] is Skin) return _skins[name];
+			return null;
+		}
+		
+		//-----
 		
 		public function get encodedSkin():BitmapData
 		{
 			if (!_skinEncodedUpdated) encode();
 			return _skinEncoded;
 		}
+		
+		
+		private static var _skins:Object = new Object;
 		
 		private var _skinEncoded:BitmapData;
 		private var _skinEncodedUpdated:Boolean = true;

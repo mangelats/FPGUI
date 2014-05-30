@@ -11,12 +11,12 @@ package punk.fpgui.skins
 		public static var CHECK_BUTTON:int = 2;
 		public static var RADIO_BUTTON:int = 3;
 		public static var SLIDER:int = 4;
-		
 		public static var TEXT_FIELD:int = 5;
-		//6 -> text_area?
-		public static var PREGRESS_VAR:int = 7;
+		public static var PREGRESS_VAR:int = 6;
+		public static var WORLD_WINDOW:int = 7;
 		
-		public static var WINDOW:int = 8;
+		//used to enctript the text options
+		public static var TEXT_DATA:int = 0xFFFF;
 	}
 
 }
