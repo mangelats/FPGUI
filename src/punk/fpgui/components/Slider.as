@@ -1,13 +1,9 @@
 package punk.fpgui.components 
 {
-	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import net.flashpunk.utils.Input;
 	import punk.fpgui.GUIEntity;
 	import punk.fpgui.GUIGraphicList;
-	import punk.fpgui.GUIState;
-	import net.flashpunk.FP;
-	import net.flashpunk.graphics.Stamp;
-	import net.flashpunk.utils.Input;
 	/**
 	 * ...
 	 * @author Copying
@@ -15,69 +11,120 @@ package punk.fpgui.components
 	public class Slider extends GUIEntity
 	{
 		
-		public function Slider(x:Number = 0, y:Number = 0, slideWidth:Number = 0, slideOffsetX:Number = 0, bgNormal:* = null, selNormal:* = null, selCenterX:Number = 0, bgOver:* = null, selOver:* = null, bgPressed:* = null, selPressed:* = null, defaultValue:Number = 0) 
+		public function Slider(x:Number = 0, y:Number = 0, pointA:Point = null, pointB:Point = null, defaultValue:Number = 0, selCenter:Point = null, mouseWheel:Number = 0, bgNormal:* = null, selNormal:* = null, bgOver:* = null, selOver:* = null, bgPressed:* = null, selPressed:* = null)
 		{
 			_graphics = new GUIGraphicList([bgNormal, bgOver, bgPressed, selNormal, selOver, selPressed], [[0, 1, 2], [3, 4, 5]], 3);
 			
-			_slideWidth = slideWidth;
-			_slideOffset = slideOffsetX;
-			_slideCenter = selCenterX;
+			_selCenter = selCenter;
 			
-			value = (defaultValue < 0 || defaultValue > 1) ? 0.5 : defaultValue;
+			_mouseWheel = mouseWheel;
 			
-			super(x, y, _graphics);
-			setHitboxTo(_graphics);
-		}
-		
-		override protected function updateReference():uint
-		{
-			return state;
-		}
-		override public function update():void
-		{
-			super.update();
-			if (!_selected) return;
-			if (Input.mouseDown)
+			_pointA = pointA;
+			_pointB = pointB;
+			
+			setSlider();
+			
+			if (defaultValue <= 0 || defaultValue > 1)
 			{
-				_posX = Input.mouseX - this.x - world.camera.x - _slideOffset;
-				if (_posX < 0) _posX = 0;
-				if (_posX > _slideWidth) _posX = _slideWidth;
-				reposSel();
+				value = 0.5;
 			}
 			else
 			{
-				_selected = false;
+				value = defaultValue;
 			}
 		}
 		
-		override protected function mouseDown():void
+		override public function update():void
 		{
-			_selected = true;
+			super.update()
+			
+			if (_selected)
+			{
+				value = (_m * Input.mouseX - _n * Input.mouseY) / _d;
+				repositionSel();
+			}
+			else if (Input.mouseWheel && _mouseWheel)
+			{
+				value += (Input.mouseWheelDelta / 100) * _mouseWheel;
+			}
 		}
 		
-		
-		private function reposSel():void
+		private function setSlider():void
+		{
+			if (_pointa == _pointB)
+			{
+				_value = 0;
+				throw new ArgumentError("The points must be different");
+			}
+			else
+			{
+				_m = _pointB.x - _pointA.x;
+				_n = _pointB.y - _pointA.y;
+				
+				_d = _m * _m + _n * _n;
+				_ua = (_m * _pointA.x - _n * _pointA.y) / _d;
+				repositionSel();
+			}
+		}
+		private function repositionSel():void
 		{
 			_graphics.getGraphic(1, 0).x =
 			_graphics.getGraphic(1, 1).x =
-			_graphics.getGraphic(1, 2).x = _posX - _slideCenter + _slideOffset;
+			_graphics.getGraphic(1, 2).x = ((_value - _ua) * _m) + _pointA.x - _selCenter.x;
+			
+			_graphics.getGraphic(1, 0).y =
+			_graphics.getGraphic(1, 1).y =
+			_graphics.getGraphic(1, 2).y = ((_value - _ua) * _n) + _pointA.y - _selCenter.y;
 		}
 		
-		public function get value():Number { return _posX / _slideWidth; }
+		public function get value():Number { return _value; }
 		public function set value(v:Number):void
 		{
-			_posX = v * _slideWidth;
-			reposSel();
+			if (v < 1)
+			{
+				_value = 1;
+			}
+			else if (v < 0)
+			{
+				_value = 0;
+			}
+			else
+			{
+				_value = v;
+			}
+			
+			repositionSel();
 		}
 		
+		public function get pointA():Point { return _pointA; }
+		public function set pointA(p:Point):void
+		{
+			_pointA = p;
+			setSlider();
+		}
+		
+		public function get pointB():Point { return _pointB; }
+		public function set pointB(p:Point):void
+		{
+			_pointB = p;
+			setSlider();
+		}
+		
+		private var _value:Number;
+		private var _mouseWheel:Number;
+		
 		private var _graphics:GUIGraphicList;
+		private var _selCenter:Point;
 		
 		private var _selected:Boolean = false;
 		
-		private var _slideWidth:Number;
-		private var _slideOffset:Number;
-		private var _slideCenter:Number;
-		private var _posX:Number;
+		//vars used to calculate the position
+		private var _pointA:Point;
+		private var _pointB:Point;
+		private var _m:Number;
+		private var _n:Number;
+		private var _d:Number;
+		private var _ua:Number;
 	}
 
 }
