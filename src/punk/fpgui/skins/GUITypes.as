@@ -6,17 +6,18 @@ package punk.fpgui.skins
 	 */
 	public class GUITypes 
 	{
-		public static var BUTTON:int = 0;
-		public static var TOGGLE_BUTTON:int = 1;
-		public static var CHECK_BUTTON:int = 2;
-		public static var RADIO_BUTTON:int = 3;
-		public static var SLIDER:int = 4;
-		public static var TEXT_FIELD:int = 5;
-		public static var PREGRESS_VAR:int = 6;
-		public static var WORLD_WINDOW:int = 7;
+		
+		public static const BUTTON:int = 0;
+		public static const TOGGLE_BUTTON:int = 1;
+		public static const CHECK_BUTTON:int = 2;
+		public static const RADIO_BUTTON:int = 3;
+		public static const SLIDER:int = 4;
+		public static const TEXT_FIELD:int = 5;
+		public static const PREGRESS_VAR:int = 6;
+		public static const WORLD_WINDOW:int = 7;
 		
 		//used to enctript the text options
-		public static var TEXT_DATA:int = 0xFFFF;
+		public static const TEXT_DATA:int = 0xFFFF;
 	}
 
 }

@@ -1,309 +1,209 @@
-package punk.fpgui.skins
+package punk.fpgui.skins 
 {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import net.flashpunk.FP;
-	import punk.fpgui.components.Button;
-	import punk.fpgui.components.CheckBox;
-	import punk.fpgui.components.RadioButton;
-	import punk.fpgui.components.Slider;
-	import punk.fpgui.components.TextField;
-	import punk.fpgui.components.ToggleButton;
 	/**
 	 * ...
 	 * @author Copying
 	 */
-	public class Skin
+	public class Skin 
 	{
-		public static const ENCODE_VERSION:int = 1;
+		public static const ENCODE_VESION:uint = 1;
+		public static var skinList:Object = new Object;
 		
-		public function Skin(skinImage:Class, encoded:Boolean = false)
+		public function Skin(skinImage:Class, encoded:Boolean = true) 
 		{
-			_partsList = new Array;
+			_parts = new Array;
+			_components = new Array;
+			_components[GUITypes.BUTTON] = new Array;
+			_components[GUITypes.TOGGLE_BUTTON] = new Array;
+			_components[GUITypes.CHECK_BUTTON] = new Array;
+			_components[GUITypes.RADIO_BUTTON] = new Array;
+			_components[GUITypes.SLIDER] = new Array;
+			_components[GUITypes.TEXT_FIELD] = new Array;
+			_components[GUITypes.PREGRESS_VAR] = new Array;
+			_components[GUITypes.WORLD_WINDOW] = new Array;
+			_components[GUITypes.TEXT_DATA] = new Array;
 			
 			if (encoded)
 			{
-				_skinEncoded = FP.getBitmap(skinImage);
+				_skinEncoded = skinImage;
 				decode();
 			}
 			else
 			{
-				_skinImage = FP.getBitmap(skinImage);
+				_skinGraphics = skinImage;
 			}
 		}
 		
-		/**
-		 * 
-		 * @param	UIType
-		 * @param	metricsType
-		 * @param	metrics			Array with all the values to create the different
-		 */
-		public function add(UIType:int, refernce:int, metricsType:int, metrics:Array)
-		{
-			_partsList[UIType][refernce] = new SkinPart(_skinImage, metricsType, metrics);
-			_skinEncodedUpdated = false;
-		}
-		public function getParts(uiType:int):Array
-		{
-			return _partsList[uiType];
-		}
-		public function getGraphic(uiType:int, width:Number = 0, height:Number = 0):Array
-		{
-			var r:Array = new Array;
-			for (var p:uint in _partsList[uiType])
-			{
-				r[p] = _partsList[uiType][p].getPart(width, height);
-			}
-			return r;
-		}
-//-----------------------------------------------------------------------------------------------------------------------
 		
-		public function getButton(x:Number, y:Number, width:Number, height:Number, text:String):Button
+//-------------------------------------------  Parts handle part ---------------------------------------------------
+		public function addPart(part:SkinPart):uint
 		{
-			if (!(_partsList[0] && _partsList[0] is Array && _partsList[0].length > 4)) return null;
-			return new Button(x, y, _partsList[0][0].getPart(width, height), _partsList[0][1].getPart(width, height), _partsList[0][2].getPart(width, height), text, _partsList[0][3][0], _partsList[0][3][1], width - _partsList[0][3].metrics[0] - _partsList[0][3].metrics[2], height - _partsList[0][3].metrics[1] - _partsList[0][3].metrics[3], getTextOptions());
+			if (_parts.indexOf(part) >= 0) return _parts.indexOf(part);
+			return _parts.push(part);
+			
+			_encodeUpdated = false;
 		}
-		public function getToggleButton(x:Number, y:Number, width:Number, height:Number, text:String):ToggleButton
+		public function attachPart(partPosition:uint, graphicType:int, reference:int = 0):void
 		{
-			if (!(_partsList[1] && _partsList[1] is Array && _partsList[1].length > 7)) return null;
-			return new ToggleButton(x, y, _partsList[1][0].getPart(width, height), _partsList[1][1].getPart(width, height), _partsList[1][2].getPart(width, height), _partsList[1][3].getPart(width, height), _partsList[1][4].getPart(width, height), _partsList[1][5].getPart(width, height), text, _partsList[1][6].metrics[0], _partsList[1][6].metrics[1], width - _partsList[1][6].metrics[0] - _partsList[1][6].metrics[2], height - _partsList[1][6].metrics[1] - _partsList[1][6].metrics[3], getTextOptions());
+			_components[graphicType][reference] = partPosition;
+			
+			_encodeUpdated = false;
 		}
-		public function getCheckButton(x:Number, y:Number, width:Number, height:Number)
+		public function addAttachPart(part:SkinPart, graphicType:int, reference:int = 0):void
 		{
-			if (!(_partsList[2] && _partsList[2] is Array && _partsList[2].length > 5)) return null;
-			return new CheckBox(x, y, _partsList[2][0].getPart(width, length), _partsList[2][1].getPart(width, length), _partsList[2][2].getPart(width, length), _partsList[2][3].getPart(width, length), _partsList[2][4].getPart(width, length));
-		}
-		public function getRadioButton(x:Number, y:Number, width:Number, height:Number, group:String = "default")
-		{
-			if (!(_partsList[3] && _partsList[3] is Array && _partsList[3].length > 5)) return null;
-			return new RadioButton(x, y, group, _partsList[3][0].getPart(width, length), _partsList[3][1].getPart(width, length), _partsList[3][2].getPart(width, length), _partsList[3][3].getPart(width, length), _partsList[3][4].getPart(width, length));
-		}
-		public function getSlider(x:Number, y:Number, width:Number, height:Number, selectorWidth:Number, selectorHeight:Number, defaultValue:Number = 0.5, mouseWheel:Number = 0):Slider
-		{
-			if (!(_partsList[4] && _partsList[4] is Array && _partsList[4].length > 7)) return null;
-			return new Slider(x, y, new Point(_partsList[4][6].metrics[0], _partsList[4][6].metrics[1]), new Point(_partsList[4][6].metrics[2], _partsList[4][6].metrics[3]), defaultValue, new Point(selectorWidth / 2, selectorHeight / 2), mouseWheel, _partsList[4][0].getPart(width, height), _partsList[4][3].getPart(selectorWidth, selectorHeight), _partsList[4][1].getPart(width, height), _partsList[4][4].getPart(selectorWidth, selectorHeight), _partsList[4][2].getPart(width, height), _partsList[4][5].getPart(selectorWidth, selectorHeight));
-		}
-		public function getTextField(x:Number, y:Number, width:Number, height:Number, defaultText:String = "", multiline:Boolean = false, editable:Boolean = true);
-		{
-			if (!(_partsList[5] && _partsList[5] is Array && _partsList[5].length > 4)) return null;
-			return new TextField(x, y, _partsList[5][0].getPart(width, length), _partsList[5][1].getPart(width, length), _partsList[5][2].getPart(width, length), defaultText, multiline, new Rectangle(_partsList[5][3].metrics[0], _partsList[5][3].metrics[1], width - _partsList[5][3].metrics[0] - _partsList[5][3].metrics[2], height - _partsList[5][3].metrics[1] - _partsList[5][3].metrics[3]), getTextOptions(), editable);
+			_components[graphicType][reference] = addPart(part);
+			
+			_encodeUpdated = false;
 		}
 		
-		public function getTextOptions():Object
-		{
-			var r:Object = new Object;
-			
-			if (!(_partsList[0xFFFF] && _partsList[0xFFFF] is Array)) return null;
-			
-			if (_partsList[0xFFFF][0]) r.size = _partsList[0xFFFF][0];
-			if (_partsList[0xFFFF][1]) r.align = _partsList[0xFFFF][1];
-			if (_partsList[0xFFFF][2]) r.wordWarp = _partsList[0xFFFF][2];
-			if (_partsList[0xFFFF][3]) r.resizable = _partsList[0xFFFF][3];
-			if (_partsList[0xFFFF][4]) r.width = _partsList[0xFFFF][4];
-			if (_partsList[0xFFFF][5]) r.height = _partsList[0xFFFF][5];
-			
-			return r;
-		}
-//-----------------------------------------------------------------------------------------------------------------------
-		private function decode():void
-		{
-			_partsList = new Array;
-			_selectedPixel = new Point;
-			var finished:Boolean = false;
-			var y:uint = 0;
-			var maxLines = nextPixel();
-			if (maxLines > _skinEncoded.height) return;
-			
-			_numberLength = nextPixel();
-			if ((_numberLength & 0x0000FFFF) != ENCODE_VERSION) return; //Not the same version
-			_numberLength = (_numberLength & 0xFFFF0000) >>> 4;
-			
-			var temp:Number = 0;
-			var temp2:Number = 0;
-			while (!finished && y <= maxLines)
-			{
-				temp = getNextPixel();
-				temp2 = (temp & 0xFFFF0000) >>> 4;
-				_partsList[temp2] = new Array;
-				if (temp2 == GUITypes.TEXT_DATA) //if it's the TextData
-				{
-					_partsList[temp2][0] = getNextPixel(); //text size (uint); pixel 1
-					temp = getNextPixel();					//pixel2
-					switch(temp & 0x000000FF) //text align (String)
-					{
-						case 0:
-							_partsList[temp2][1] = null;
-							break;
-						case 1:
-							_partsList[temp2][1] = "left";
-							break;
-						case 2:
-							_partsList[temp2][1] = "center";
-							break;
-						case 3:
-							_partsList[temp2][1] = "right";
-					}
-					_partsList[temp2][2] = new Boolean((temp & 0x00000F00) >>> 2); //text wordWrap (Boolean)
-					_partsList[temp2][3] = new Boolean((temp & 0x0000F000) >>> 3); //text wordWrap (Boolean)
-					
-					_partsList[temp2][4] = getNextPixel(); //width (uint) (pretty much unused); pixel 3
-					if (_partsList[temp2][4] == 0) _partsList[temp2][4] = null;
-					
-					_partsList[temp2][5] = getNextPixel(); //height (uint) (pretty much unused); pixel 4
-					if (_partsList[temp2][5] == 0) _partsList[temp2][5] = null;
-				}
-				else
-				{
-					for (var n:int = (temp & 0xFFFF) - 1; n >= 0; n--)
-					{
-						_partsList[temp2][n] = getNextPart();
-					}
-				}
-			}
-			_skinEncodedUpdated = true;
-		}
 		
-		private var _lines:uint;
+//-----------------------------------------   Encode - Decode part  ---------------------------------------------------
 		private function encode():void
 		{
-			_lines = 1;
-			_skinData = new BitmapData(_skinImage.width, 1);
-			var n:int = 1;
-			while (n * 0xFFFFFFFF < _skinImage.width)
+			_position = new Point(1);
+			_skinData = new BitmapData(_skinGraphics.width, 1);
+			setPixel(ENCODE_VESION);
+			
+			setPixel(_parts.length);
+			for each (var part:SkinPart in _parts)
 			{
-				n++
-			}
-			while (n * 0xFFFFFFFF < _skinImage.height)
-			{
-				n++
-			}
-			_skinData.setPixel(1, 0, ((n & 0xFFFF) << 4) + Skin.ENCODE_VERSION);
-			_selectedPixel = new Point(3);
-			for (var p:uint in _partsList)
-			{
-				if (!_partsList[p] || !(_partsList[p] is Array)) continue;
-				var ref:int = _partsList[p].length & 0xFFFF;
-				//sets the info
-				_skinData.setPixel(_selectedPixel.x, _selectedPixel.y, ((p & 0xFFFF) << 4) + ref);
-				selectNextPixel();
-				//sets all the parts
-				for (var x:int = 0; x < ref; x++)
+				setPixel(((part.type & 0xFFFF) << 4) + (part.metrics.length & 0xFFFF));
+				for each (var value:uint in part.metrics)
 				{
-					var part:SkinPart = _partsList[p][x];
-					_skinData.setPixel(_selectedPixel.x, _selectedPixel.y, ((part.type & 0xFFFF) << 4) + (part.metrics.length & 0xFFFF));
-					selectNextPixel();
-					for (var y:int = 0; y < part.metrics.length; y++)
-					{
-						var value:Number = part.metrics[y];
-						for (var y:int = n - 1; y >= 0; y--)
-						{
-							_skinData.setPixel(_selectedPixel.x, _selectedPixel.y, (value & 0xFFFFFFFF));
-							selectNextPixel();
-							value = value >>> 8;
-						}
-					}
+					setPixel(value);
 				}
 			}
 			
-			_skinData.setPixel(0, 0, _lines);
+			setPixel(_components.length);
+			for each(var component:Array in _components)
+			{
+				setPixel(component.length);
+				for each (var value:uint in component)
+				{
+					setPixel(value);
+				}
+			}
 			
-			_skinEncoded = new BitmapData(_skinImage.width, _skinImage.height + _skinData.height);
-			_skinEncoded.copyPixels(_skinData, _skinData.rect, new Point);
-			_skinEncoded.copyPixels(_skinImage, _skinImage.rect, new Point(0, _skinData.height));
+			_skinData.setPixel(0, 0, _position.y + 1);
 			
-			_skinEncodedUpdated = true;
+			_skinEncoded = new BitmapData(_skinGraphics.width, _skinData.height + _skinGraphics.height);
+			_skinEncoded.copyPixels(_skinData, new Rectangle(0, 0, _skinData.width, _skinData.height), new Point);
+			_skinEncoded.copyPixels(_skinGraphics, new Rectangle(0, 0, _skinGraphics.width, _skinGraphics.height), new Point(0, _skinData.height));
+			
+			_encodeUpdated = true;
 		}
 		
-		
-		
-		
-		private function selectNextPixel():void
+		private function decode():void
 		{
-			_selectedPixel.x++;
-			if (_selectedPixel.x >= _skinEncoded.width)
+			_position = new Point;
+			_parts = new Array;
+			_components = new Array;
+			
+			_lines = getPixel();
+			_temp = getPixel();
+			if ((_temp & 0xFFFF) != ENCODE_VESION) return; //check if was encoded with the same version. If not, stops it.
+			
+			_num = getPixel();
+			var metrics:Array;
+			
+			while (_num > 0)
 			{
-				_selectedPixel.x = 0;
-				_selectedPixel.y++;
-				_lines++;
+				_temp = getPixel();
+				_type = ((_temp & 0xFFFF0000) >> 4);
+				_num2 = (_temp & 0xFFFF);
 				
-				//creates 1 more line
-				var t:BitmapData = new BitmapData(_skinImage.width, _lines);
-				t.copyPixels(_skinData, _skinData.rect, new Point);
-				_skinData = t;
+				metrics = new Array;
+				while (_num2 > 0)
+				{
+					metrics.push(getPixel());
+				}
+				
+				_parts.push(new SkinPart(_skinGraphics, _type, metrics));
+				_num--;
 			}
-		}
-		private function getNextPixel():uint
-		{
-			var r:uint = _skinEncoded.getPixel(_selectedPixel.x, _selectedPixel.y);
-			_selectedPixel.x++;
-			if (_selectedPixel.x >= _skinEncoded.width)
-			{
-				_selectedPixel.x = 0;
-				_selectedPixel.y++;
-			}
-			return r;
-		}
-		private function getNextNumber():Number
-		{
-			var x:Number = 0;
-			for (var y:int = 0; y < _numberLength; y++)
-			{
-				x <<= 8;
-				x += getNextPixel();
-			}
-			return x;
-		}
-		private function getNextPart():SkinPart
-		{
-			var temp:uint = getNextPixel();
-			var numBytesUsed:int = temp & 0xFFFF;
-			var partType:int = (temp & 0xFFFF0000) >>> 4;
 			
-			var a:Array = new Array;
-			for (var x:int = 0; x < numBytesUsed; x++)
+			_num = getPixel();
+			var n:uint = 0;
+			while (n < _num)
 			{
-				a[x] = getNextNumber();
+				_temp = getPixel();
+				_type = ((_temp & 0xFFFF0000) >> 4);
+				_num2 = (_temp & 0xFFFF);
+				
+				while (_num2 > 0)
+				{
+					_components[n].push(getPixel());
+				}
+				n++;
 			}
-			return new SkinPart(_skinImage, partType, a);
+			
+			_encodeUpdated = true;
 		}
-		
-		//-----
-		
-		public static function addSkin(name:String, skin:Skin):void
+		private var _r:uint;
+		private function getPixel(jump:uint = 1):uint
 		{
-			_skins[name] = skin;
+			_r = _skinEncoded.getPixel(_position.x, _position.y);
+			selectPixel(jump);
+			return _r;
+		}
+		private function setPixel(value:uint, jump:uint = 1):void
+		{
+			if ((!_skinData) || _position.y > _skinData.height)
+			{
+				var t:BitmapData = _skinData;
+				_skinData = new BitmapData(_skinGraphics.width, _position.y + 1);
+				_skinData.copyPixels(t, new Rectangle(0, 0, t.width, t.height), new Point);
+			}
+			_skinData.setPixel(_position.x, _position.y, value);
+			selectPixel(jump);
+		}
+		private function selectPixel(jump:uint = 1):void
+		{
+			_position.x += jump;
+			while (_position.x > _skinEncoded.width)
+			{
+				_position.y ++;
+				_position.x -= _skinEncoded.width;
+			}
+		}
+		private var _position:Point;
+		private var _temp:uint;
+		private var _num:uint;
+		private var _num2:uint;
+		private var _type:uint;
+		
+//------------------------------------------------ Skin Container --------------------------------------------------
+		
+		public static function newSkin(name:String, skinImage:Class, encoded:Boolean = true):Skin
+		{
+			return addSkin(name, new Skin(skinImage, encoded));
+		}
+		public static function addSkin(name:String, skin:OldSkin):Skin
+		{
+			return (skinList[name] = skin);
 		}
 		public static function removeSkin(name:String):void
 		{
-			if (_skins.hasOwnProperty(name)) _skins[name] = null;
+			if (skinList.hasOwnProperty(name)) _skins[name] = null;
 		}
 		
 		public static function getSkin(name:String):Skin
 		{
-			if (_skins.hasOwnProperty(name) && _skins[name] is Skin) return _skins[name];
+			if (skinList.hasOwnProperty(name) && _skins[name] is OldSkin) return _skins[name];
 			return null;
-		}
 		
-		//-----
+//----------------------------------------------  var part -------------------------------------------------------------
+		private var _skinEncoded:BitmapData;	//Encoded skin (if is updated, you can write this in a file and import directly)
+		private var _skinGraphics:BitmapData;	//Graphic part
+		private var _skinData:BitmapData;		//Encoded data into Bitmapdata --> only used when encoding
 		
-		public function get encodedSkin():BitmapData
-		{
-			if (!_skinEncodedUpdated) encode();
-			return _skinEncoded;
-		}
+		private var _encodeUpdated:Boolean = true;//is _skinEncoded updated to be returned?
 		
-		
-		private static var _skins:Object = new Object;
-		
-		private var _skinEncoded:BitmapData;
-		private var _skinEncodedUpdated:Boolean = true;
-		private var _skinImage:BitmapData;
-		private var _skinData:BitmapData;
-		private var _partsList:Array;
-		
-		private var _selectedPixel:Point;
-		private var _numberLength:int;
+		private var _parts:Array;				//Array of all the parts
+		private var _components:Array;			//2D array of uint. Returns the position of a part
 	}
 
 }
