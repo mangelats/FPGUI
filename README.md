@@ -26,16 +26,16 @@ var button:Button = new Button(100, 150, NORMAL, OVER, PRESSED, "Click me!");
 add(button);
 ```
 
-### Create or inport an skin
+### Create or import an skin
 
-You can create an skin and make sure that every component follows the same rules.
+You can import an skin and make sure that every component follows the same rules.
 ``` actionscript
 //embed the skin that have the information encoded
 [Embed(source = "skin_name.png")]
 private const SKIN:Class;
 
 //create the skin and add it to the skin container
-var skin:Skin = new Skin(SKIN, true);
+var skin:Skin = Skin.newSkin(SKIN, true);
 
 //creates a 150x40 button in the position (100, 100)
 var button:Button = skin.getButton(100, 100, 150, 40, "Click me!");
