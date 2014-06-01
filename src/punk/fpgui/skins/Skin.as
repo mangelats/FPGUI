@@ -17,15 +17,15 @@ package punk.fpgui.skins
 		{
 			_parts = new Array;
 			_components = new Array;
-			_components[GUITypes.BUTTON] = new Array;
-			_components[GUITypes.TOGGLE_BUTTON] = new Array;
-			_components[GUITypes.CHECK_BUTTON] = new Array;
-			_components[GUITypes.RADIO_BUTTON] = new Array;
-			_components[GUITypes.SLIDER] = new Array;
-			_components[GUITypes.TEXT_FIELD] = new Array;
-			_components[GUITypes.PREGRESS_VAR] = new Array;
-			_components[GUITypes.WORLD_WINDOW] = new Array;
-			_components[GUITypes.TEXT_DATA] = new Array;
+			_components[GUIType.BUTTON] = new Array;
+			_components[GUIType.TOGGLE_BUTTON] = new Array;
+			_components[GUIType.CHECK_BUTTON] = new Array;
+			_components[GUIType.RADIO_BUTTON] = new Array;
+			_components[GUIType.SLIDER] = new Array;
+			_components[GUIType.TEXT_FIELD] = new Array;
+			_components[GUIType.PREGRESS_VAR] = new Array;
+			_components[GUIType.WORLD_WINDOW] = new Array;
+			_components[GUIType.TEXT_DATA] = new Array;
 			
 			if (encoded)
 			{
@@ -195,6 +195,17 @@ package punk.fpgui.skins
 		{
 			if (skinList.hasOwnProperty(name) && _skins[name] is Skin) return _skins[name];
 			return null;
+		}
+		
+//----------------------------------------  get components from the skin ----------------------------------------
+		
+		public function getButton(x:Number, y:Number, width:uint, height:uint, text:String = ""):Button
+		{
+			return new Button(x, y, getPart(0, 0).getPart(width, height), getPart(0, 1).getPart(width, height), getPart(0, 2).getPart(width, height), text, getPart(0, 3).metrics[0], getPart(0, 3).metrics[1], getPart(0, 3).metrics[2]
+		}
+		private function getPart(type:uint, reference:uint = 0):SkinPart
+		{
+			return _parts[_components[type][reference]];
 		}
 		
 //----------------------------------------------  var part -------------------------------------------------------------
