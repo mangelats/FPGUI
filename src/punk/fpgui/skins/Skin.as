@@ -3,6 +3,7 @@ package punk.fpgui.skins
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import punk.fpgui.components.Button;
 	/**
 	 * ...
 	 * @author Copying
@@ -181,7 +182,7 @@ package punk.fpgui.skins
 		{
 			return addSkin(name, new Skin(skinImage, encoded));
 		}
-		public static function addSkin(name:String, skin:OldSkin):Skin
+		public static function addSkin(name:String, skin:Skin):Skin
 		{
 			return (skinList[name] = skin);
 		}
@@ -192,8 +193,9 @@ package punk.fpgui.skins
 		
 		public static function getSkin(name:String):Skin
 		{
-			if (skinList.hasOwnProperty(name) && _skins[name] is OldSkin) return _skins[name];
+			if (skinList.hasOwnProperty(name) && _skins[name] is Skin) return _skins[name];
 			return null;
+		}
 		
 //----------------------------------------------  var part -------------------------------------------------------------
 		private var _skinEncoded:BitmapData;	//Encoded skin (if is updated, you can write this in a file and import directly)

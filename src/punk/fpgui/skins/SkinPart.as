@@ -19,14 +19,14 @@ package punk.fpgui.skins
 		
 		public function getPart(width:Number, height:Number):BitmapData
 		{
-			if (type == PartTypes.EXTRA_DATA) return null;
+			if (type == PartType.EXTRA_DATA) return null;
 			
 			var r:BitmapData = new BitmapData(width, height, true, 0);
-			if (type == PartTypes.UNRESIZABLE)
+			if (type == PartType.UNRESIZABLE)
 			{
 				r.copyPixels(_source, new Rectangle(metrics[0], metrics[1], metrics[2], metrics[3]), new Point);
 			}
-			else if (type == PartTypes.SPLIT_3_HORITZONTAL)
+			else if (type == PartType.SPLIT_3_HORITZONTAL)
 			{
 				r.copyPixels(_source, new Rectangle(metrics[0], metrics[1], metrics[4], metrics[3]), new Point);
 				var p:Number = metrics[4];
@@ -37,7 +37,7 @@ package punk.fpgui.skins
 				}
 				r.copyPixels(_source, new Rectangle(metrics[5], metrics[1], metrics[2], metrics[3]), new Point(width + metrics[5] - metrics[2], 0));
 			}
-			else if (type == PartTypes.SPLIT_3_VERTICAL)
+			else if (type == PartType.SPLIT_3_VERTICAL)
 			{
 				r.copyPixels(_source, new Rectangle(metrics[0], metrics[1], metrics[2], metrics[6]), new Point);
 				var p:Number = metrics[6];
@@ -48,7 +48,7 @@ package punk.fpgui.skins
 				}
 				r.copyPixels(_source, new Rectangle(metrics[0], metrics[7], metrics[2], metrics[3]), new Point(height +  metrics[7] - metrics[3], 0));
 			}
-			else if (type == PartTypes.SPLIT_9)
+			else if (type == PartType.SPLIT_9)
 			{
 				//row 1
 				//1-1

@@ -4,7 +4,7 @@ package punk.fpgui.skins
 	 * ...
 	 * @author Copying
 	 */
-	public class PartTypes 
+	public class PartType 
 	{
 		public static var UNRESIZABLE:int = 0;
 		public static var SPLIT_3_HORITZONTAL:int = 1;
