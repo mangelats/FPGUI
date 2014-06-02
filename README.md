@@ -33,7 +33,7 @@ You can import an skin and make sure that every component follows the same rules
 private const SKIN:Class;
 
 //create the skin and add it to the skin container
-var skin:Skin = Skin.newSkin("mySkinName", SKIN, true);
+var skin:Skin = Skin.newSkin("mySkinName", SKIN);
 
 //creates a 150x40 button in the position (100, 100)
 var button:Button = skin.getButton(100, 100, 150, 40, "Click me!");
