@@ -6,6 +6,7 @@ package punk.fpgui.components
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
+	import net.flashpunk.graphics.Stamp;
 	/**
 	 * ...
 	 * @author Copying
@@ -15,13 +16,15 @@ package punk.fpgui.components
 		
 		public function ProgressBar(x:Number = 0, y:Number = 0, graphic:* = null, width:Number = 100, height:Number = 20, defaultValue:Number = 0) 
 		{
+			super (x, y);
+			
 			_width = width;
 			_height = height;
 			_buffer = new BitmapData(width, height, true, 0);
 			
 			if (graphic is Class)
 			{
-				_graphic = FP.getBitmap(graphic);
+				_graphic = new Stamp(graphic);
 			}
 			else if(graphic is Graphic || graphic is Function)
 			{
@@ -32,9 +35,9 @@ package punk.fpgui.components
 				throw new ArgumentError("The graphic argument must be an embed class, a Graphic (or subclass) or a function that returns a graphic.");
 			}
 			
+			
 			value = defaultValue;
 			
-			super(x, y, _graphic);
 		}
 		
 		override public function render():void
@@ -53,7 +56,7 @@ package punk.fpgui.components
 			
 			g.render(_buffer, new Point, new Point);
 			
-			renderTarget.copyPixels(_buffer, new Rectangle(0, 0, _width * _value, _height), new Point(x, y));
+			(renderTarget ? renderTarget : FP.buffer).copyPixels(_buffer, new Rectangle(0, 0, _width * _value, _height), new Point(x, y));
 		}
 		
 		/** The value of the var (from 0 to 1) */
