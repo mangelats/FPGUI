@@ -2,7 +2,7 @@ package punk.fpgui.components
 {
 	import punk.fpgui.GUIEntity;
 	import punk.fpgui.GUIGraphicList;
-	import net.flashpunk.graphics.Text;
+	import punk.fpgui.GUIText;
 	/**
 	 * ...
 	 * @author Copying
@@ -11,10 +11,10 @@ package punk.fpgui.components
 	{
 		public var checked:Boolean = false;
 		
-		public function ToggleButton(x:Number = 0, y:Number = 0, normal:* = null, over:* = null, pressed:* = null, normalChecked:* = null, overChecked:* = null, pressedChecked:* = null, text:String = "", textOffsetX:Number = 0, textOffsetY:Number = 0, textOptions:Object = null) 
+		public function ToggleButton(x:Number = 0, y:Number = 0, normal:* = null, over:* = null, pressed:* = null, normalChecked:* = null, overChecked:* = null, pressedChecked:* = null, text:String = "", textOffsetX:Number = 0, textOffsetY:Number = 0, textWidth:Number = 0, textHeight:Number = 0, textOptions:Object = null) 
 		{
 			if (!textOptions) textOptions = { size: 16, color: 0x0000000, wordWrap: true, align: "center", resizable: true };
-			_text = new Text(text, textOffsetX, textOffsetY, textOptions);
+			_text = new GUIText(text, textWidth, textHeight, textOptions, textOffsetX, textOffsetY);
 			
 			_graphics = new GUIGraphicList([normal, over, pressed, normalChecked, overChecked, pressedChecked, _text], [[0, 1, 2, 3, 4, 5], [6, 6, 6, 6, 6, 6]], 6);
 			super(x, y, _graphics);
@@ -31,7 +31,7 @@ package punk.fpgui.components
 		}
 		
 		private var _graphics:GUIGraphicList;
-		private var _text:Text;
+		private var _text:GUIText;
 		
 	}
 
