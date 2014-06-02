@@ -13,7 +13,7 @@ package punk.fpgui.skins
 		public static const RADIO_BUTTON:uint = 3;
 		public static const SLIDER:uint = 4;
 		public static const TEXT_FIELD:uint = 5;
-		public static const PREGRESS_VAR:uint = 6;
+		public static const PROGRESS_BAR:uint = 6;
 		public static const WORLD_WINDOW:uint = 7;
 		
 		//used to enctript the text options
