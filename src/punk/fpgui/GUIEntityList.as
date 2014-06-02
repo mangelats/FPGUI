@@ -9,7 +9,7 @@ package punk.fpgui
 	public class GUIEntityList extends Entity
 	{
 		
-		public function GUIEntityList(x:Number = 0, y:Number = 0, background:Graphic = null) 
+		public function GUIEntityList(x:Number = 0, y:Number = 0, background:* = null) 
 		{
 			super(x, y, (background ? background : new Graphic))
 			setHitboxTo(graphic);
@@ -34,6 +34,11 @@ package punk.fpgui
 			e.removed();
 			_entities = _entities.slice(0, pos).concat(_entities.slice(pos + 1));
 			return true;
+		}
+		
+		public function getEntity(position:uint):*
+		{
+			return _entities[position];
 		}
 		
 		override public function deleted():void
