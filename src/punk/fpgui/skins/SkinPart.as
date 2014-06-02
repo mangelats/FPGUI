@@ -4,12 +4,18 @@ package punk.fpgui.skins
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	/**
-	 * ...
+	 * Apart of the Skin. Every part becomes Graphic or data. It allows to compress the Skin image.
 	 * @author Copying
 	 */
 	public class SkinPart 
 	{
 		
+		/**
+		 * Constructor.
+		 * @param	source			The bitmap that contains the data of the part (an instance of the image of the skin).
+		 * @param	skinPartType	The type of part (see PartTypes).
+		 * @param	metrics			Metrics of the part. It contains all the numbers to get the data.
+		 */
 		public function SkinPart(source:BitmapData, skinPartType:int = 0, metrics:Array = new Array) 
 		{
 			_source = source;
@@ -17,6 +23,12 @@ package punk.fpgui.skins
 			metrics = metrics
 		}
 		
+		/**
+		 * Used to get the Graphic.
+		 * @param	width	Width of the part.
+		 * @param	height	Height of the part.
+		 * @return			Returns the BitmapData of the graphical part. If its type is data, returns null.
+		 */
 		public function getPart(width:Number, height:Number):BitmapData
 		{
 			if (type == PartType.EXTRA_DATA) return null;
@@ -118,6 +130,7 @@ package punk.fpgui.skins
 		
 		/** An instance of the source BitmapData of the skin. */
 		private var _source:BitmapData;
+		/** The type of this part */
 		public var type:int;
 		/** Array that saves all the used points to create the part */
 		public var metrics:Array;

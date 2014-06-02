@@ -5,20 +5,43 @@ package punk.fpgui
 	import net.flashpunk.FP;
 	import net.flashpunk.utils.Input;
 	/**
-	 * ...
+	 * The base calss for the components. It handlesthe GUIGraphic list and events.
 	 * @author Copying
 	 */
 	public class GUIEntity extends Entity
 	{
-		
-		//functions that handle differents events
+		/**
+		 * Called when the mouse is over the Entity (only once).
+		 */
 		public var onOver:Function = onOv;
+		/**
+		 * Called when the mouse is no longer over the entity (only called once).
+		 */
 		public var onOut:Function = onOu;
+		/**
+		 * Called when the entity is clicked.
+		 */
 		public var onClick:Function = onC;
+		/**
+		 * Called when the entity is double-clicked.
+		 */
 		public var onDClick:Function = onDC;
+		/**
+		 * Called when the mouse goes down over the entity.
+		 */
 		public var onMouseDown:Function = onMD;
+		/**
+		 * Called when the mouse goes up over the entity.
+		 */
 		public var onMouseUp:Function = onMU;
 		
+		
+		/**
+		 * Contructor.
+		 * @param	x			X position in the world.
+		 * @param	y			Y position in the World.
+		 * @param	graphics	Graphics used.
+		 */
 		public function GUIEntity(x:Number = 0, y:Number = 0, graphics:GUIGraphicList = null) 
 		{
 			super(x, y);
@@ -29,12 +52,18 @@ package punk.fpgui
 			setHitboxTo(graphic);
 		}
 		
+		/**
+		 * Called when the Entity is added to a world. If you override this, be sure to use super.added()
+		 */
 		override public function added():void
 		{
 			super.added();
 			FP.stage.addEventListener(MouseEvent.CLICK, c);
 			FP.stage.addEventListener(MouseEvent.DOUBLE_CLICK, dc);
 		}
+		/**
+		 * Called when the Entity is removed from a world. If you override this, be sure to use super.removed()
+		 */
 		override public function removed():void
 		{
 			FP.stage.removeEventListener(MouseEvent.CLICK, c);
@@ -42,7 +71,10 @@ package punk.fpgui
 			super.removed();
 		}
 		
-		override public function update():void //have to be called BEFORE adding new things in the subclasse (when overrided)
+		/**
+		 * Called every game tick. If override this, use super.upddate() before do anything else.
+		 */
+		override public function update():void
 		{
 			super.update();
 			
@@ -87,6 +119,9 @@ package punk.fpgui
 			return 0;
 		}
 		
+		/**
+		 * State of this GUIEntity (see GUIState).
+		 */
 		public function get state():uint { return _state; }
 		
 		

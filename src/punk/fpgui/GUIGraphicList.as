@@ -5,7 +5,7 @@ package punk.fpgui
 	import net.flashpunk.Graphic;
 	import net.flashpunk.graphics.Stamp;
 	/**
-	 * ...
+	 * This class allows to have multiple graphics in a single Entity and change depending of avalue (all GUIEntities use it).
 	 * @author Copying
 	 */
 	public class GUIGraphicList extends Graphic
@@ -17,6 +17,14 @@ package punk.fpgui
 		public var width:Number;
 		public var height:Number;
 		
+		/**
+		 * Constructor.
+		 * @param	graphics			Array with all the graphics that you will need.	
+		 * 								The graphics can be an embed Class, a Graphic or a Function that returns one of the other two.
+		 * @param	layers				2D Array with all the references. The first array are the layers (will be rendered all the layers)
+		 * 								and the second are the different numbers to the graphics used for each layer.
+		 * @param	referencesNumber	The number of graphics in every layer (they have to be all the same. If you want, you can repeet the numbers).
+		 */
 		public function GUIGraphicList(graphics:Array = null, layers:Array = null, referencesNumber:uint = 1) //references ia a 2D array
 		{
 			_usedBases = new Array;
@@ -58,6 +66,9 @@ package punk.fpgui
 			if (!height) height = 0;
 		}
 		
+		/**
+		 * Called every game tick. If overrided, use super.update() at the start.
+		 */
 		override public function update():void
 		{
 			for (var x:uint = 0; x < _graphics.length; x++)
@@ -82,6 +93,9 @@ package punk.fpgui
 			}
 		}
 		
+		/**
+		 * Called every game tick to render. If overrided, use super.render() at the start.
+		 */
 		override public function render(target:BitmapData, point:Point, camera:Point):void
 		{
 			point.x += x;
@@ -106,6 +120,12 @@ package punk.fpgui
 			}
 		}
 		
+		/**
+		 * Gets a graphic from the graphics array.
+		 * @param	pos	Position in the array.
+		 * @param	ref	Reference.
+		 * @return		Graphic required.
+		 */
 		public function getGraphic(pos:uint, ref:uint):Graphic
 		{
 			return _graphics[pos][ref].gGraphic;

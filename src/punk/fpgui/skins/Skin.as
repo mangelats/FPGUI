@@ -10,7 +10,7 @@ package punk.fpgui.skins
 	import punk.fpgui.components.TextField;
 	import punk.fpgui.components.ToggleButton;
 	/**
-	 * ...
+	 * A full skin to make a GUI.
 	 * @author Copying
 	 */
 	public class Skin 
@@ -18,6 +18,11 @@ package punk.fpgui.skins
 		public static const ENCODE_VESION:uint = 1;
 		public static var skinList:Object = new Object;
 		
+		/**
+		 * Constructor.
+		 * @param	skinImage	Skin image.
+		 * @param	encoded		Is that image encoded?
+		 */
 		public function Skin(skinImage:Class, encoded:Boolean = true) 
 		{
 			_parts = new Array;
@@ -45,6 +50,11 @@ package punk.fpgui.skins
 		
 		
 //-------------------------------------------  Parts handle part ---------------------------------------------------
+		/**
+		 * Adds a part into the skin. It can also be used to get a position of a part.
+		 * @param	part	Part added.
+		 * @return			Position of the part.
+		 */
 		public function addPart(part:SkinPart):uint
 		{
 			if (_parts.indexOf(part) >= 0) return _parts.indexOf(part);
@@ -52,12 +62,24 @@ package punk.fpgui.skins
 			
 			_encodeUpdated = false;
 		}
-		public function attachPart(partPosition:uint, graphicType:int, reference:int = 0):void
+		/**
+		 * Attaches a part to a graphic and a reference. The same part can be attached multiple times.
+		 * @param	partPosition	Position of the part.
+		 * @param	componentType	The type of the component that the part is attached.
+		 * @param	reference		The reference of that component.
+		 */
+		public function attachPart(partPosition:uint, componentType:int, reference:int = 0):void
 		{
-			_components[graphicType][reference] = partPosition;
+			_components[componentType][reference] = partPosition;
 			
 			_encodeUpdated = false;
 		}
+		/**
+		 * Adds and then attaches a part to a graphic and a reference.
+		 * @param	part			The part added.
+		 * @param	componentType	The type of the component that the part is attached.
+		 * @param	reference		The reference of that component.
+		 */
 		public function addAttachPart(part:SkinPart, graphicType:int, reference:int = 0):void
 		{
 			_components[graphicType][reference] = addPart(part);
@@ -277,6 +299,15 @@ package punk.fpgui.skins
 		}
 		
 //----------------------------  get components from the skin (welcome to the hell of the big lines)  --------------------------------
+		/**
+		 * Creates the especified Button
+		 * @param	x		X position.
+		 * @param	y		Y position.
+		 * @param	width	Button width.
+		 * @param	height	Button height.
+		 * @param	text	Button's text.
+		 * @return			The button.
+		 */
 		public function getButton(x:Number = 0, y:Number = 0, width:uint = 100, height:uint = 30, text:String = ""):Button
 		{
 			return new Button(x, y, getPart(GUIType.BUTTON, 0, width, height), getPart(GUIType.BUTTON, 1, width, height), getPart(GUIType.BUTTON, 2, width, height), text, getMetrics(0,3)[0], getMetrics(0,3)[1], getMetrics(0,3)[2], getMetrics(0, 3)[3], _textOptions);

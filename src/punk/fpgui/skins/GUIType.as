@@ -1,7 +1,7 @@
 package punk.fpgui.skins 
 {
 	/**
-	 * ...
+	 * The different components that exist.
 	 * @author Copying
 	 */
 	public class GUIType 

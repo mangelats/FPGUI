@@ -1,7 +1,7 @@
 package punk.fpgui.skins 
 {
 	/**
-	 * ...
+	 * The different types of skin parts.
 	 * @author Copying
 	 */
 	public class PartType 

@@ -10,12 +10,22 @@ package punk.fpgui
 	import net.flashpunk.graphics.Text;
 	
 	/**
-	 * ...
+	 * A modification of the Text class that allows to render a text partially (inside a Rectangle).
 	 * @author Copying
 	 */
 	public class GUIText extends Text
 	{
-		
+		/**
+		 * Constructor.
+		 * @param	text		The textthat you want.
+		 * @param	width		Width of the box.
+		 * @param	height		Height of the box.
+		 * @param	options		The text Options (same as Text).
+		 * @param	offsetX		Offset in the X position that the text have in the box.
+		 * @param	offsetY		Offset in the Y position that the text have in the box.
+		 * @param	textScrollX	Scroll in the X position that the text have in the box (this can be changed later).
+		 * @param	textScrollY	Scroll in the y position that the text have in the box (this can be changed later).
+		 */
 		public function GUIText(text:String, width:Number = 0, height:Number = 0, options:Object = null, offsetX:Number = 0, offsetY:Number = 0, textScrollX:Number = 0, textScrollY:Number = 0)
 		{
 			if (!options) options = { size: 16, color: 0xFFFFFF, wordWrap: false, align: "left", resizable: true };
@@ -169,6 +179,9 @@ package punk.fpgui
 		
 		public function get lastLineMetrics():TextLineMetrics { return _field.getLineMetrics(_field.numLines - 1); }
 		
+		/**
+		 * The X scroll of the text.
+		 */
 		public function get textScrollX():Number { return _textScroll.x; }
 		public function set textScrollX(x:Number):void
 		{
@@ -176,6 +189,9 @@ package punk.fpgui
 			updateTextBuffer();
 		}
 		
+		/**
+		 * The Y scroll of the text.
+		 */
 		public function get textScrollY():Number { return _textScroll.y; }
 		public function set textScrollY(y:Number):void
 		{

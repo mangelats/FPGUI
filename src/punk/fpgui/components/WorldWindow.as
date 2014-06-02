@@ -9,7 +9,8 @@ package punk.fpgui.components
 	import net.flashpunk.Graphic;
 	import net.flashpunk.World;
 	/**
-	 * ...
+	 * It's a window to another world (literally). Allow to render a world into a Bitmap and then render that bitmap on your world.
+	 * Be carefull with infinite loops.
 	 * @author Copying
 	 */
 	public class WorldWindow extends GUIEntity
@@ -17,8 +18,19 @@ package punk.fpgui.components
 		
 		private static var _usedWorlds:Array = new Array;
 		
+		/** Where the world renders */
 		public var buffer:BitmapData;
 		
+		/**
+		 * Constructor.
+		 * @param	x		X position in the world (the one wich contains this window).
+		 * @param	y		Y position in the world (the one wich contains this window).
+		 * @param	width	Window width.
+		 * @param	height	Window Height.
+		 * @param	world	The world that is in the window.
+		 * @param	normal	The background graphic when the mouse is not over it.
+		 * @param	over	The background graphic when the mouse is over it.
+		 */
 		public function WorldWindow(x:uint = 0, y:uint = 0, width:uint = 275, height:uint = 200, world:World = null, normal:* = null, over:* = null) 
 		{
 			if (!world) return;
@@ -46,7 +58,7 @@ package punk.fpgui.components
 			erraseBuffer();
 			FP.buffer = buffer;
 			
-			//pre-renders the world
+			//renders the world
 			_world.render();
 			
 			buffer = FP.buffer;

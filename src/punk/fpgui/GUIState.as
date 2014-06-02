@@ -1,7 +1,7 @@
 package punk.fpgui 
 {
 	/**
-	 * ...
+	 * This are the states that a GUIEntity can have.
 	 * @author Copying
 	 */
 	public class GUIState 
