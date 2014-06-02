@@ -30,14 +30,7 @@ package punk.fpgui.components
 			
 			setSlider();
 			
-			if (defaultValue <= 0 || defaultValue > 1)
-			{
-				value = 0.5;
-			}
-			else
-			{
-				value = defaultValue;
-			}
+			value = defaultValue;
 		}
 		
 		override public function update():void
@@ -46,8 +39,22 @@ package punk.fpgui.components
 			
 			if (_selected)
 			{
-				value = (_m * Input.mouseX - _n * Input.mouseY) / _d;
-				repositionSel();
+				if (_vertical && _horitzontal)
+				{
+					return;
+				}
+				else if (_vertical)
+				{
+					value = Input.mouseX - x;
+				}
+				else if (_horitzontal)
+				{
+					value = Input.mouseY - y;
+				}
+				else
+				{
+					value = (_m * (Input.mouseX - x) - _n * (Input.mouseY - y)) / _d;
+				}
 			}
 			else if (Input.mouseWheel && _mouseWheel)
 			{
@@ -57,18 +64,16 @@ package punk.fpgui.components
 		
 		private function setSlider():void
 		{
-			if (_pointa == _pointB)
+			_horitzontal = (_pointA.y == _pointB.y);
+			_vertical = (_pointA.x == _pointB.x);
+			
+			_m = _pointB.x - _pointA.x;
+			_n = _pointB.y - _pointA.y;
+			
+			if(!(_vertical || _horitzontal))
 			{
-				_value = 0;
-				throw new ArgumentError("The points must be different");
-			}
-			else
-			{
-				_m = _pointB.x - _pointA.x;
-				_n = _pointB.y - _pointA.y;
-				
 				_d = _m * _m + _n * _n;
-				_ua = (_m * _pointA.x - _n * _pointA.y) / _d;
+				_ua = (_m * x - _n * y) / _d;
 				repositionSel();
 			}
 		}
@@ -76,11 +81,11 @@ package punk.fpgui.components
 		{
 			_graphics.getGraphic(1, 0).x =
 			_graphics.getGraphic(1, 1).x =
-			_graphics.getGraphic(1, 2).x = ((_value - _ua) * _m) + _pointA.x - _selCenter.x;
+			_graphics.getGraphic(1, 2).x = (_horitzontal ? (_value * _m) : ((_value - _ua) * _m)) + x - _selCenter.x;
 			
 			_graphics.getGraphic(1, 0).y =
 			_graphics.getGraphic(1, 1).y =
-			_graphics.getGraphic(1, 2).y = ((_value - _ua) * _n) + _pointA.y - _selCenter.y;
+			_graphics.getGraphic(1, 2).y = (_vertical ? (_value * _n) : ((_value - _ua) * _n)) + y - _selCenter.y;
 		}
 		
 		public function get value():Number { return _value; }
@@ -99,7 +104,7 @@ package punk.fpgui.components
 				_value = v;
 			}
 			
-			repositionSel();
+			if (!(_vertical && _horitzontal)) repositionSel();
 		}
 		
 		public function get pointA():Point { return _pointA; }
@@ -118,6 +123,9 @@ package punk.fpgui.components
 		
 		private var _value:Number;
 		private var _mouseWheel:Number;
+		
+		private var _vertical:Boolean = false;
+		private var _horitzontal:Boolean = false;
 		
 		private var _graphics:GUIGraphicList;
 		private var _selCenter:Point;
