@@ -86,7 +86,7 @@ package punk.fpgui
 			var tlm_y:Number = 2;
 			var renderRect:Rectangle = new Rectangle(0, 0, _textRect.width, _textRect.height);
 			
-			for (var li:int = 0; li < ml; li++)
+			for (var li:int = 0; li < _field.numLines; li++)
 			{
 				tlm = _field.getLineMetrics(li);
 				if ((tlm_y + tlm.height) < _textScroll.y) continue;
