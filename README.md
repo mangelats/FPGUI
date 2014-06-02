@@ -62,7 +62,7 @@ button.onClick = click;
 
 Upcoming features
 ------
-  - Make all the fucntions to allow skins to create components.
+  - Make all the docs.
   - An skin editor.
   - Create a wiki.
   - More components (like a progress var).
