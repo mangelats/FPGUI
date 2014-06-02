@@ -11,13 +11,13 @@ package punk.fpgui.components
 	public class Slider extends GUIEntity
 	{
 		
-		public function Slider(x:Number = 0, y:Number = 0, pointA:Point = null, pointB:Point = null, defaultValue:Number = 0.5, selCenter:Point = null, mouseWheel:Number = 0, bgNormal:* = null, selNormal:* = null, bgOver:* = null, selOver:* = null, bgPressed:* = null, selPressed:* = null)
+		public function Slider(x:Number = 0, y:Number = 0, pointA:Point = null, pointB:Point = null, defaultValue:Number = 0.5, selectorPoint:Point = null, mouseWheel:Number = 0, bgNormal:* = null, selNormal:* = null, bgOver:* = null, selOver:* = null, bgPressed:* = null, selPressed:* = null)
 		{
 			_graphics = new GUIGraphicList([bgNormal, bgOver, bgPressed, selNormal, selOver, selPressed], [[0, 1, 2], [3, 4, 5]], 3);
 			
 			super(x, y, _graphics);
 			
-			_selCenter = selCenter;
+			_selCenter = selectorPoint;
 			
 			_mouseWheel = mouseWheel;
 			
