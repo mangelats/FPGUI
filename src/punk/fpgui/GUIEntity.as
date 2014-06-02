@@ -79,16 +79,18 @@ package punk.fpgui
 			super.update();
 			
 			
+			
+			if (_down && !Input.mouseDown)
+			{
+				mouseUp();
+				onMouseUp();
+			}
+			
 			if (collidePoint(x, y, world.mouseX, world.mouseY))
 			{
 				
 				if (!Input.mouseDown || (_state == GUIState.NORMAL && _down))
 				{
-					if (_state == GUIState.MOUSE_DOWN)
-					{
-						mouseUp();
-						onMouseUp();
-					}
 					_state = GUIState.OVER;
 				}
 				
