@@ -23,7 +23,7 @@ package punk.fpgui.components
 			b.y += y;
 			entityList.add(b);
 			
-			return entityList
+			return entityList;
 		}
 	}
 
