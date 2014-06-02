@@ -15,11 +15,7 @@ package punk.fpgui.components
 		{
 			_graphics = new GUIGraphicList([bgNormal, bgOver, bgPressed, selNormal, selOver, selPressed], [[0, 1, 2], [3, 4, 5]], 3);
 			
-			//make the points relative
-			pointA.x += x;
-			pointA.y += y;
-			pointB.x += x;
-			pointB.y += y;
+			super(x, y, _graphics);
 			
 			_selCenter = selCenter;
 			
@@ -43,23 +39,36 @@ package punk.fpgui.components
 				{
 					return;
 				}
-				else if (_vertical)
-				{
-					value = Input.mouseX - x;
-				}
 				else if (_horitzontal)
 				{
-					value = Input.mouseY - y;
+					value = (Input.mouseX - x) / _m;
+				}
+				else if (_vertical)
+				{
+					value = (Input.mouseY - y) / _n;
 				}
 				else
 				{
-					value = (_m * (Input.mouseX - x) - _n * (Input.mouseY - y)) / _d;
+					value = ((_m * (Input.mouseX - x) - _n * (Input.mouseY - y))) / _d;
 				}
 			}
 			else if (Input.mouseWheel && _mouseWheel)
 			{
 				value += (Input.mouseWheelDelta / 100) * _mouseWheel;
 			}
+		}
+		
+		override protected function updateReference():uint
+		{
+			return state;
+		}
+		override protected function mouseDown():void
+		{
+			_selected = true;
+		}
+		override protected function mouseUp():void
+		{
+			_selected = false;
 		}
 		
 		private function setSlider():void
@@ -73,25 +82,51 @@ package punk.fpgui.components
 			if(!(_vertical || _horitzontal))
 			{
 				_d = _m * _m + _n * _n;
-				_ua = (_m * x - _n * y) / _d;
+				_ua = (_m * _pointA.x - _n * _pointA.y) / _d;
 				repositionSel();
 			}
 		}
 		private function repositionSel():void
 		{
-			_graphics.getGraphic(1, 0).x =
-			_graphics.getGraphic(1, 1).x =
-			_graphics.getGraphic(1, 2).x = (_horitzontal ? (_value * _m) : ((_value - _ua) * _m)) + x - _selCenter.x;
+			if (_horitzontal && _vertical) return;
+			if (_horitzontal)
+			{
+				_graphics.getGraphic(1, 0).x =
+				_graphics.getGraphic(1, 1).x =
+				_graphics.getGraphic(1, 2).x = _value * _m + _pointA.x - _selCenter.x;
+				
+				_graphics.getGraphic(1, 0).y =
+				_graphics.getGraphic(1, 1).y =
+				_graphics.getGraphic(1, 2).y = _pointA.y - _selCenter.y ;
+			}
+			else if (_vertical)
+			{
+				_graphics.getGraphic(1, 0).x =
+				_graphics.getGraphic(1, 1).x =
+				_graphics.getGraphic(1, 2).x = _pointA.x - _selCenter.x ;
+				
+				_graphics.getGraphic(1, 0).y =
+				_graphics.getGraphic(1, 1).y =
+				_graphics.getGraphic(1, 2).y = _value * _n + _pointA.y - _selCenter.y ;
+			}
+			else
+			{
+				_graphics.getGraphic(1, 0).x =
+				_graphics.getGraphic(1, 1).x =
+				_graphics.getGraphic(1, 2).x = _value * _m + _pointA.x - _selCenter.x;
+				
+				
+				_graphics.getGraphic(1, 0).y =
+				_graphics.getGraphic(1, 1).y =
+				_graphics.getGraphic(1, 2).y = _value * _n + _pointA.y - _selCenter.y;
+			}
 			
-			_graphics.getGraphic(1, 0).y =
-			_graphics.getGraphic(1, 1).y =
-			_graphics.getGraphic(1, 2).y = (_vertical ? (_value * _n) : ((_value - _ua) * _n)) + y - _selCenter.y;
 		}
 		
 		public function get value():Number { return _value; }
 		public function set value(v:Number):void
 		{
-			if (v < 1)
+			if (v > 1)
 			{
 				_value = 1;
 			}
