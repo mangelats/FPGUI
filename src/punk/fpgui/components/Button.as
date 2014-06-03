@@ -25,7 +25,7 @@ package punk.fpgui.components
 		 * @param	textHeight		The height that you want the text to have
 		 * @param	textOptions		Text options (the same that Text).
 		 */
-		public function Button(x:Number = 0, y:Number = 0, normal:* = null, over:* = null, pressed:* = null, text:String = "", textOffsetX:Number = 10, textOffsetY:Number = 10, textWidth:Number = 200, textHeight:Number = 200, textOptions:Object = null) 
+		public function Button(x:Number = 0, y:Number = 0, normal:* = null, over:* = null, pressed:* = null, text:String = "", textOptions:Object = null, textOffsetX:Number = 10, textOffsetY:Number = 10, textWidth:Number = 200, textHeight:Number = 200) 
 		{
 			if (!textOptions) textOptions = { size: 16, color: 0x0000000, wordWrap: true, align: "center", resizable: true };
 			
