@@ -11,7 +11,7 @@ package punk.fpgui.components
 	{
 		public var checked:Boolean = false;
 		
-		public function ToggleButton(x:Number = 0, y:Number = 0, normal:* = null, over:* = null, pressed:* = null, normalChecked:* = null, overChecked:* = null, pressedChecked:* = null, text:String = "", textOffsetX:Number = 0, textOffsetY:Number = 0, textWidth:Number = 0, textHeight:Number = 0, textOptions:Object = null) 
+		public function ToggleButton(x:Number = 0, y:Number = 0, normal:* = null, over:* = null, pressed:* = null, normalChecked:* = null, overChecked:* = null, pressedChecked:* = null, text:String = "", textOptions:Object = null, textOffsetX:Number = 10, textOffsetY:Number = 10, textWidth:Number = 200, textHeight:Number = 200) 
 		{
 			if (!textOptions) textOptions = { size: 16, color: 0x0000000, wordWrap: true, align: "center", resizable: true };
 			_text = new GUIText(text, textWidth, textHeight, textOptions, textOffsetX, textOffsetY);

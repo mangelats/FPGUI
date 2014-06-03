@@ -310,12 +310,12 @@ package punk.fpgui.skins
 		 */
 		public function getButton(x:Number = 0, y:Number = 0, width:uint = 100, height:uint = 30, text:String = ""):Button
 		{
-			return new Button(x, y, getPart(GUIType.BUTTON, 0, width, height), getPart(GUIType.BUTTON, 1, width, height), getPart(GUIType.BUTTON, 2, width, height), text, getMetrics(0,3)[0], getMetrics(0,3)[1], getMetrics(0,3)[2], getMetrics(0, 3)[3], _textOptions);
+			return new Button(x, y, getPart(GUIType.BUTTON, 0, width, height), getPart(GUIType.BUTTON, 1, width, height), getPart(GUIType.BUTTON, 2, width, height), text, _textOptions, getMetrics(0,3)[0], getMetrics(0,3)[1], getMetrics(0,3)[2], getMetrics(0, 3)[3], _textOptions);
 		}
 		
 		public function getToggleButton(x:Number = 0, y:Number = 0, width:uint = 100, height:uint = 30):ToggleButton
 		{
-			return new ToggleButton(x, y, getPart(GUIType.TOGGLE_BUTTON, 0, width, height), getPart(GUIType.TOGGLE_BUTTON, 1, width, height), getPart(GUIType.TOGGLE_BUTTON, 2, width, height), getPart(GUIType.TOGGLE_BUTTON, 3, width, height), getPart(GUIType.TOGGLE_BUTTON, 4, width, height), getPart(GUIType.TOGGLE_BUTTON, 5, width, height), text, getMetrics(GUIType.BUTTON, 6)[0], getMetrics(GUIType.BUTTON, 6)[1], getMetrics(GUIType.BUTTON, 6)[2], getMetrics(GUIType.BUTTON, 6)[3], _textOptions);
+			return new ToggleButton(x, y, getPart(GUIType.TOGGLE_BUTTON, 0, width, height), getPart(GUIType.TOGGLE_BUTTON, 1, width, height), getPart(GUIType.TOGGLE_BUTTON, 2, width, height), getPart(GUIType.TOGGLE_BUTTON, 3, width, height), getPart(GUIType.TOGGLE_BUTTON, 4, width, height), getPart(GUIType.TOGGLE_BUTTON, 5, width, height), text, _textOptions, getMetrics(GUIType.BUTTON, 6)[0], getMetrics(GUIType.BUTTON, 6)[1], getMetrics(GUIType.BUTTON, 6)[2], getMetrics(GUIType.BUTTON, 6)[3]);
 		}
 		
 		public function getCheckbox(x:Number = 0, y:Number = 0, width:uint = 100, height:uint = 30, checkWidth:Number = 20, checkHeight:Number = 20):Checkbox
