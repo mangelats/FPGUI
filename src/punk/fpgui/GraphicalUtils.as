@@ -23,6 +23,8 @@ package punk.fpgui
 			}
 			
 			r.copyPixels(source, new Rectangle(sourceRect.x + cut2, sourceRect.y, sourceRect.width, sourceRect.height), new Point(width - cut2, 0));
+		
+			return r;
 		}
 		public static function slice3V(source:BitmapData, sourceRect:Rectangle, cut1:Number, cut2:Number, height:Number):BitmapData
 		{
@@ -38,6 +40,8 @@ package punk.fpgui
 			}
 			
 			r.copyPixels(source, new Rectangle(sourceRect.x, sourceRect.y + cut2, sourceRect.width, sourceRect.height), new Point(0, height - cut2));
+			
+			return r;
 		}
 		public static function slice9(source:BitmapData, sourceRect:Rectangle, cutVertical1:Number, cutVertical2:Number, cutHoritzontal1:Number, cutHoritzontal2:Number, width:Number, height:Number):BitmapData
 		{
@@ -72,7 +76,8 @@ package punk.fpgui
 				temp.copyPixels(source, tempRect, new Point(x));
 				x += cutVertical2 - cutVertical1;
 			}
-			temp.copyPixels(source, new Rectangle(sourceRect.x + cutVertical2, sourceRect.y + cutHoritzontal1, sourceRect.width - cutVertical2, cutHoritzontal2 - cutHoritzontal1), new Point(width + cutVertical2 - sourceRect.width, cutHoritzontal1));
+			
+			temp.copyPixels(source, new Rectangle(sourceRect.x + cutVertical2, sourceRect.y + cutHoritzontal1, sourceRect.width - cutVertical2, cutHoritzontal2 - cutHoritzontal1), new Point(width + cutVertical2 - sourceRect.width, 0));
 			
 			y = cutHoritzontal1;
 			while (y < (height + cutHoritzontal2 - sourceRect.height))
